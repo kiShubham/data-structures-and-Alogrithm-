@@ -35,3 +35,20 @@ console.log(ans);
 let arr = [3, 0, 0, 1, 2, 4];
 
 //apply stacks concept ;
+let stack = [];
+let ans = [];
+//by using stack make answer array ans ;
+// as we need
+const ngr = () => {
+  for (var i = arr.length - 1; i >= 0; i--) {
+    stack.push(arr[i]);
+  }
+  console.log(stack); //[ 4, 2, 1, 0, 0, 3 ]
+  //
+  if (arr[1] > arr[0]) {
+    ans.push(arr[1]);
+  }
+  for (var i = 0; i < stack.length; i++) {}
+};
+ngr();
+//
