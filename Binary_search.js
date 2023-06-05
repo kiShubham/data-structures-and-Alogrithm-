@@ -202,10 +202,11 @@ const numOfRotation = (arr) => {
       r = mid - 1;
     } else if (l === r) {
       if (arr[mid] < arr[mid - 1]) {
+        // if this executes than idx = mid ,else return -1
         idx = mid;
         break;
       }
-      return -1;
+      // return -1;
     }
   }
   console.log(idx);
@@ -218,7 +219,6 @@ console.log(numOfRotation(rotatedArray));
 console.log(numOfRotation(rotatedArray2));
 console.log(numOfRotation(rotatedArray3));
  */
-
 /* 
 leetcode Q33.; 
 
@@ -240,30 +240,12 @@ Example 2:
 Example 3:
 ?Input: nums = [4,5,6,7,0,1,2], target = 5 , Output: 1
 ?Input: nums = [6,7,0,1,2,4,5], target = 5 , Output: 6 compare arr[l]or arr[r] with target;
-
-* if arr[l] > target {true -> search right of mid -> l = mid + 1 }
-*                   {false-> search left of mid  -> r = mid - 1 }
-* then mid vs target comparison ;
- if arr[l] == target return ;
-
    
 ? [2,3,4,5,6,7,1] t = 7,
- arr[l] = 2 ,t = 7 ;
- -> arr[l] > target | 2 < 7   
- ! false then check                
- - > target > mid ;                         
-  * true-> search right ;l = mid + 1;        
-    false-> search left ;r = mid - 1;      
+       
 
  ? [7,1,2,3,4,5,6] arr[l] = 7 ,t =1 
- -> arr[l] > target | 7 > 1 
- ! true ,then check 
- - > target > mid ;
-    true -> search right ; l = mid + 1 ;
-  * false -> search left ; r = mid - 1 ;
-
-
-
+ 
 
 Example 4:
 ?Input: nums = [1], target = 0
@@ -278,48 +260,20 @@ nums is an ascending array that is possibly rotated.
 -104 <= target <= 104
 
  */
-/*
-const searchInRotatedSortedArray = (arr, target) => {
-  let l = 0;
-  let r = arr.length - 1;
-  if (l === r) {
-    if ((arr[l] = target)) return 0;
-    else return -1;
-  }
-  let mid;
-  while (l <= r) {
-    mid = l + Math.floor((r - l) / 2);
-    if (arr[mid] === target) return mid;
-    //
-    else if (arr[l] > target) {
-      // target is rotated ;
-      if (arr[mid] > target) r = mid - 1;
-      else l = mid + 1;
-    } //
-    else if (arr[l] < target) {
-      // target not rotated yet ;
-      if (arr[mid] > target) r = mid - 1;
-      else l = mid + 1;
-    }
-  }
-  return -1;
-};
-
-*/
 
 const searchInRotatedSortedArray = (arr, x) => {
-  // find pivot ;(minimum number)
+  // find pivot ;(minimum number's index)
   // then search accordingly
   let l = 0;
   let r = arr.length - 1;
-  if (l === r || arr[l] < arr[r]) {
+  if (l === r) {
     if (x === arr[l]) return l;
     else return -1; // not exist in unit array ;
   }
   let mid, pivot;
   while (l <= r) {
     mid = l + Math.floor((r - l) / 2);
-    //
+    //[ 1, 3, 5 ]
     if (arr[mid] < arr[mid - 1] && arr[mid] < arr[mid + 1]) {
       pivot = mid;
       break;
@@ -329,13 +283,13 @@ const searchInRotatedSortedArray = (arr, x) => {
     } else if (arr[mid] > arr[r]) {
       l = mid + 1;
     } else if (l === r) {
-      if (arr[mid] < arr[mid - 1]) {
-        pivot = mid;
-        break;
-      }
-      return -1; // not exist ;
+      if (arr[mid] < arr[mid + 1]) pivot = mid; //left most
+      else if (arr[mid] < arr[mid - 1]) pivot = mid; // right most;
+      break;
     }
   }
+
+  // return [pivot, arr[pivot]]; // till here working fine ;
 
   // now we know pivot
   l = 0;
@@ -347,18 +301,23 @@ const searchInRotatedSortedArray = (arr, x) => {
   else if (x > arr[pivot] && x <= arr[r]) {
     //lie in right of pivot ;
     l = pivot + 1;
-    mid = l + Math.floor((r - l) / 2);
-    if (arr[mid] === x) return mid;
-    else if (arr[mid] > x) r = mid - 1;
-    else if (arr[mid] < x) l = mid + 1;
+    while (l <= r) {
+      mid = l + Math.floor((r - l) / 2);
+      if (arr[mid] === x) return mid;
+      else if (arr[mid] > x) r = mid - 1;
+      else if (arr[mid] < x) l = mid + 1;
+    }
   } //
   else if (x > arr[pivot] && x >= arr[0]) {
     // lie in left of pivot ;
     r = pivot - 1;
-    mid = l + Math.floor((r - l) / 2);
-    if (arr[mid] === x) return mid;
-    else if (arr[mid] > x) r = mid - 1;
-    else if (arr[mid] < x) l = mid + 1;
+    l = 0;
+    while (l <= r) {
+      mid = l + Math.floor((r - l) / 2);
+      if (arr[mid] === x) return mid;
+      else if (arr[mid] > x) r = mid - 1;
+      else if (arr[mid] < x) l = mid + 1;
+    }
   } //
   return "target didnt exist";
 };
@@ -368,7 +327,13 @@ const numsArray1 = [7, 1, 2, 3, 4, 5, 6]; //error running ;
 const numsArray2 = [6, 7, 0, 1, 2, 4, 5]; //working
 const numsArray3 = [4, 5, 6, 7, 0, 1, 2]; // not working  ? -1
 
-console.log(searchInRotatedSortedArray(numsArray, 7));
-console.log(searchInRotatedSortedArray(numsArray1, 6));
-console.log(searchInRotatedSortedArray(numsArray2, 2)); // 6
-console.log(searchInRotatedSortedArray(numsArray3, 0));
+/* console.log("first");
+console.log(searchInRotatedSortedArray(numsArray, 10)); // target didnt exist
+console.log(searchInRotatedSortedArray(numsArray1, 6)); //6
+console.log(searchInRotatedSortedArray(numsArray2, 2)); // 4
+console.log(searchInRotatedSortedArray(numsArray2, 0)); // 2
+console.log(searchInRotatedSortedArray(numsArray3, 0)); //4
+console.log(searchInRotatedSortedArray([1, 3], 3)); //1
+console.log(searchInRotatedSortedArray([1, 3, 5], 5)); //2
+console.log(searchInRotatedSortedArray([1, 3, 5], 0)); // target didnt exist
+ */
