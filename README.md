@@ -1,5 +1,6 @@
 # data-structures-and-Alogrithm-
 
+use better comments extension for ease to read ;
 daily practice will make me better at coding ;
 using javascript
 

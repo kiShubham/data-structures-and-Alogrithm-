@@ -162,17 +162,17 @@ console.log(countElement(arr4, 30)); // -1
   */
 
 /* 
- ! 6Q. Number of times sorted Array is rotated ;
+ ! 6Q. Number of times sorted Array is rotated ; or index of minimum number in sorted rotated array ;
  ? array = [2,5,6,8,10,11,12,15,18] *non repeating
  ? after '4'times rotation ,input arr= [10,11,12,15,18,2,5,6,8] 15>8 ;so search right of 15;
-                                     ? [15,18,2,5,6,8,10,11,12] 5<12 ;so save 5 and search left;
-                                     ? [2,5,6,8,10,11,12,15,18] no rotation
+                                     ? [15,18,2,5,6,8,10,11,12] 6<12 ;so save 6 and search left;
+                                     ? [2,5,6,8,10,11,12,15,18] no rotation since arr[mid] > arr[len-1];
  ! if(arr[0] > arr[ar.len -1]){ // rotation happens} // search right;and find index of smallest no.
   arr[mid] < arr[0] ;then possibility is arr[mid] is smallest or smallest lie in left of arr[mid]
   !if(arr[0] < arr[ar.len -1]){ // rotation not happens} //output is 0;
  todo: find no. of times rotated ; no of times rotated;{ (arr.length-1)-(indexof(2)) + 1 }
  todo: so we actually need to find indexOf(smallest element);
-   if(arr[mid] < arr[mid+1] && arr[mid]<arr[mid-1]){ return mid};
+   if(arr[mid] < arr[mid+1] && arr[mid] < arr[mid-1]){ return mid};
    what if l=r=0 in case of norotation ;
    or l=r=arr.length-1 , mid+1 will be undefined ; apply condition ;
 */
@@ -208,9 +208,11 @@ const numOfRotation = (arr) => {
       return -1;
     }
   }
+  console.log(idx);
   let count = arr.length - idx;
   return `Array was rotated ${count} times`;
 };
+
 /* console.log(numOfRotation(notrarray));
 console.log(numOfRotation(rotatedArray));
 console.log(numOfRotation(rotatedArray2));
@@ -223,9 +225,9 @@ leetcode Q33.;
 ! 7Q. Search in Rotated Sorted Array
 
 * There is an integer array nums sorted in ascending order (with distinct values).
-*Prior to being passed to your function, nums is possibly rotated at an unknown pivot index k (1 <= k < nums.length) such that the resulting array is [nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]] (0-indexed). For example, [0,1,2,4,5,6,7] might be rotated at pivot index 3 and become [4,5,6,7,0,1,2].
-*Given the array nums after the possible rotation and an integer target, return the index of target if it is in nums, or -1 if it is not in nums.
-*You must write an algorithm with O(log n) runtime complexity.
+* Prior to being passed to your function, nums is possibly rotated at an unknown pivot index k (1 <= k < nums.length) such that the resulting array is [nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]] (0-indexed). For example, [0,1,2,4,5,6,7] might be rotated at pivot index 3 and become [4,5,6,7,0,1,2].
+* Given the array nums after the possible rotation and an integer target, return the index of target if it is in nums, or -1 if it is not in nums.
+* You must write an algorithm with O(log n) runtime complexity.
 
 Example 1:
 ? Input: nums = [4,5,6,7,0,1,2], target = 0
@@ -236,12 +238,32 @@ Example 2:
 ?Output: -1
 
 Example 3:
-?Input: nums = [4,5,6,7,0,1,2], target = 5 Output: 1
-?Input: nums = [6,7,0,1,2,4,5], target = 5 Output: 6 compare arr[l]or arr[r] with target;
+?Input: nums = [4,5,6,7,0,1,2], target = 5 , Output: 1
+?Input: nums = [6,7,0,1,2,4,5], target = 5 , Output: 6 compare arr[l]or arr[r] with target;
 
-*if arr[l] > target {true -> search right of mid -> l = mid + 1 }
+* if arr[l] > target {true -> search right of mid -> l = mid + 1 }
 *                   {false-> search left of mid  -> r = mid - 1 }
+* then mid vs target comparison ;
+ if arr[l] == target return ;
+
    
+? [2,3,4,5,6,7,1] t = 7,
+ arr[l] = 2 ,t = 7 ;
+ -> arr[l] > target | 2 < 7   
+ ! false then check                
+ - > target > mid ;                         
+  * true-> search right ;l = mid + 1;        
+    false-> search left ;r = mid - 1;      
+
+ ? [7,1,2,3,4,5,6] arr[l] = 7 ,t =1 
+ -> arr[l] > target | 7 > 1 
+ ! true ,then check 
+ - > target > mid ;
+    true -> search right ; l = mid + 1 ;
+  * false -> search left ; r = mid - 1 ;
+
+
+
 
 Example 4:
 ?Input: nums = [1], target = 0
@@ -256,3 +278,97 @@ nums is an ascending array that is possibly rotated.
 -104 <= target <= 104
 
  */
+/*
+const searchInRotatedSortedArray = (arr, target) => {
+  let l = 0;
+  let r = arr.length - 1;
+  if (l === r) {
+    if ((arr[l] = target)) return 0;
+    else return -1;
+  }
+  let mid;
+  while (l <= r) {
+    mid = l + Math.floor((r - l) / 2);
+    if (arr[mid] === target) return mid;
+    //
+    else if (arr[l] > target) {
+      // target is rotated ;
+      if (arr[mid] > target) r = mid - 1;
+      else l = mid + 1;
+    } //
+    else if (arr[l] < target) {
+      // target not rotated yet ;
+      if (arr[mid] > target) r = mid - 1;
+      else l = mid + 1;
+    }
+  }
+  return -1;
+};
+
+*/
+
+const searchInRotatedSortedArray = (arr, x) => {
+  // find pivot ;(minimum number)
+  // then search accordingly
+  let l = 0;
+  let r = arr.length - 1;
+  if (l === r || arr[l] < arr[r]) {
+    if (x === arr[l]) return l;
+    else return -1; // not exist in unit array ;
+  }
+  let mid, pivot;
+  while (l <= r) {
+    mid = l + Math.floor((r - l) / 2);
+    //
+    if (arr[mid] < arr[mid - 1] && arr[mid] < arr[mid + 1]) {
+      pivot = mid;
+      break;
+    } else if (arr[mid] < arr[r]) {
+      pivot = mid;
+      r = mid - 1;
+    } else if (arr[mid] > arr[r]) {
+      l = mid + 1;
+    } else if (l === r) {
+      if (arr[mid] < arr[mid - 1]) {
+        pivot = mid;
+        break;
+      }
+      return -1; // not exist ;
+    }
+  }
+
+  // now we know pivot
+  l = 0;
+  r = arr.length - 1;
+  mid = 0;
+  if (x === arr[pivot]) {
+    return pivot;
+  } //
+  else if (x > arr[pivot] && x <= arr[r]) {
+    //lie in right of pivot ;
+    l = pivot + 1;
+    mid = l + Math.floor((r - l) / 2);
+    if (arr[mid] === x) return mid;
+    else if (arr[mid] > x) r = mid - 1;
+    else if (arr[mid] < x) l = mid + 1;
+  } //
+  else if (x > arr[pivot] && x >= arr[0]) {
+    // lie in left of pivot ;
+    r = pivot - 1;
+    mid = l + Math.floor((r - l) / 2);
+    if (arr[mid] === x) return mid;
+    else if (arr[mid] > x) r = mid - 1;
+    else if (arr[mid] < x) l = mid + 1;
+  } //
+  return "target didnt exist";
+};
+
+const numsArray = [2, 3, 4, 5, 6, 7, 1];
+const numsArray1 = [7, 1, 2, 3, 4, 5, 6]; //error running ;
+const numsArray2 = [6, 7, 0, 1, 2, 4, 5]; //working
+const numsArray3 = [4, 5, 6, 7, 0, 1, 2]; // not working  ? -1
+
+console.log(searchInRotatedSortedArray(numsArray, 7));
+console.log(searchInRotatedSortedArray(numsArray1, 6));
+console.log(searchInRotatedSortedArray(numsArray2, 2)); // 6
+console.log(searchInRotatedSortedArray(numsArray3, 0));
