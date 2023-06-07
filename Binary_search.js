@@ -337,3 +337,77 @@ console.log(searchInRotatedSortedArray([1, 3], 3)); //1
 console.log(searchInRotatedSortedArray([1, 3, 5], 5)); //2
 console.log(searchInRotatedSortedArray([1, 3, 5], 0)); // target didnt exist
  */
+
+/*
+
+! 8Q. Searching in nearly sorted array ;
+  given array = [ 5,10,30,20,40]
+  nearly sorted means ,any number that is supposed to be at Ith position(acc. to sorted)
+  can possibly on (I-1)th position and (I+1)th position(index) ;
+
+  for this we could modify BinarySearch ;
+*/
+const nearlySorted = [5, 10, 30, 20, 40];
+const searchInNearlySorted = (arr, x) => {
+  let l = 0;
+  let r = arr.length - 1;
+  let mid;
+  while (l <= r) {
+    mid = l + Math.floor((r - l) / 2);
+    if (arr[mid] === x) return mid;
+    else if (mid >= 0 && arr[mid - 1] === x) return mid - 1;
+    else if (mid <= arr.length && arr[mid + 1] === x) return mid + 1;
+    else if (arr[mid] > x) r = mid - 2;
+    else if (arr[mid] < x) l = mid + 2;
+  }
+  return -1;
+};
+
+/* 
+console.log(searchInNearlySorted(nearlySorted, 30)); // 2
+console.log(searchInNearlySorted(nearlySorted, 20)); // 3
+console.log(searchInNearlySorted(nearlySorted, 40)); // 4
+console.log(searchInNearlySorted(nearlySorted, 10)); // 1
+console.log(searchInNearlySorted(nearlySorted, 5)); // 0
+ */
+
+/* 
+
+! 9Q. Find floor of an Element in a sorted Array; 
+given array = [1,2,3,4,8,10,10,12,29] element = 5;
+? floor means ,for 7.5 , 7 is floor value and 8 is ceil value ;
+in this num 5 is not present therefore floor is  " the greatest number smaller than 5 ";
+possibly if 5 is in given array the floor value should be 5 itself, in the absence of 5 we wish to find 
+greatest smaller digit than 5 ;
+similar concept for ceiling value if asked in future; 
+
+?approach
+
+
+*/
+const floorArray = [1, 2, 3, 4, 8, 10, 12, 29];
+
+const floorOfElement = (arr, x) => {
+  let l = 0;
+  let r = arr.length - 1;
+  let mid;
+  let floor;
+  while (l <= r) {
+    mid = l + Math.floor((r - l) / 2);
+    if (arr[mid] === x) {
+      floor = mid;
+      break;
+    } else if (arr[mid] > x) r = mid - 1;
+    else if (arr[mid] < x) {
+      floor = mid;
+      l = mid + 1;
+    }
+  }
+  if (floor > 0) return floor;
+  return -1;
+};
+console.log(floorOfElement(floorArray, 10)); //5
+console.log(floorOfElement(floorArray, 5)); //3
+console.log(floorOfElement(floorArray, 8)); //4
+console.log(floorOfElement(floorArray, 9)); //4
+console.log(floorOfElement(floorArray, 30)); //7
