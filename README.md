@@ -4,6 +4,12 @@ use better comments extension for ease to read ;
 daily practice will make me better at coding ;
 using javascript
 
+* make notes of methods of all alogrithm ;
+* like if there are 14 types of question in binary search and we are using 10 types of way / methods for solving those question ;
+* so make notes of those 10 methods ;
+* 
+
+
 # 1. binary search
 
 Binary Search is defined as a searching algorithm used in a sorted array by repeatedly dividing the search interval in half. The idea of binary search is to use the information that the array is sorted and reduce the time complexity to O(log N).
