@@ -13,7 +13,7 @@
 */
 
 // const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-let arr = [-1, 0, 3, 5, 9, 12];
+let nums = [-1, 0, 3, 5, 9, 12];
 let search1 = (arr, x) => {
   let l = 0;
   let r = arr.length - 1;
@@ -846,5 +846,93 @@ const minPages = (arr, k) => {
   return res;
 };
 
-console.log(minPages(books, 2)); // 113
-console.log(minPages(books1, 2)); // 60
+// console.log(minPages(books, 2)); // 113
+// console.log(minPages(books1, 2)); // 60
+
+let num = 10;
+// console.log(num % 1);
+function countPrimes(n) {
+  let res = 0;
+  for (let i = 0; i <= n; i++) {
+    for (let j = 2; j <= i / 2; j++) {
+      if (i % j !== 0) {
+        res += 1;
+        console.log(i + "<-i");
+        break;
+      }
+    }
+  }
+  return res;
+}
+// console.log(countPrimes(num));
+function factorialBasic(n) {
+  let res = 1;
+  for (let i = 1; i <= n; i++) {
+    res = res * i;
+    console.log("res-->" + res);
+  }
+  return res;
+}
+// console.log(factorialBasic(5));
+
+let matrix = [
+  [1, 2, 3, 4],
+  [1, 2, 4, 5],
+  [2, 3, 3, 4],
+  [1, 1, 2, 3],
+];
+// ! sum of diagonal element;
+function diagonalSum(n, matrix) {
+  //sQuare matrix
+  let i = n;
+  let j = n;
+  let res = 0;
+  while (i > 0) {
+    res += matrix[i - 1][j - 1];
+    i--, j--;
+  }
+  return res;
+}
+// console.log(diagonalSum(4, matrix));
+const dup = [2, 4, 4, 4, 6, 8, 8, 8];
+// const dup = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+
+// return length;one element once only;
+function removeDuplicatesFromSortedArray(arr) {
+  // extra space used
+  /* let p = 0;
+  let res = [];
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] !== nums[i + 1]) {
+      res[p] = nums[i];
+      p++;
+    }
+  }
+  return res;
+*/
+  // no extra space used
+  let n = arr.length;
+  let p = 0;
+  for (let i = 0; i < n - 1; i++) {
+    if (arr[i] != arr[i + 1]) {
+      arr[p] = arr[i];
+      p++;
+    }
+  }
+  arr[p] = arr[n - 1];
+
+  return arr;
+}
+// console.log(removeDuplicatesFromSortedArray(dup));
+
+function secondryDiagonal(n, matrix) {
+  let i = 0;
+  let j = n - 1;
+  let res = 0;
+  while (i < n) {
+    res += matrix[i][j];
+    i++, j--;
+  }
+  return res;
+}
+// console.log(secondryDiagonal(4, matrix));
