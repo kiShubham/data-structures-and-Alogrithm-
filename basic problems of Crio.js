@@ -159,3 +159,27 @@ function reverseArray(n, arr) {
 //   // starting from middle exchange the adjactent number of middle;
 //   //["a","b","c"];here b is the middle number and by exchanging a and c by eachother the array will be reversed
 // }
+function capitaliseBasic(paragraph) {
+  let nextletterCap = false;
+  let ans = paragraph.charAt(0).toUpperCase();
+  for (let i = 1; i < paragraph.length; i++) {
+    if (nextletterCap === true) {
+      ans = ans + paragraph.charAt(i).toUpperCase();
+    } else {
+      ans = ans + paragraph.charAt(i);
+    }
+    if (paragraph.charAt(i) == " ") {
+      nextletterCap = true;
+    }
+    if (paragraph.charAt(i) !== " ") {
+      nextletterCap = false;
+    }
+  }
+  return ans;
+}
+let string1 = "the quick Brown fox jumps over The lazy dog.";
+// console.log(capitaliseBasic(string1));
+// (tc = O(n)), (sc = O(n));
+
+string1.charAt(1) = "l";
+console.log(string1);
