@@ -131,23 +131,86 @@ for (let i = 0; i < arr.length; i++) {
 // console.log(myMap.get(1));
 // console.log(myMap);
 
-let newString = "Statements are unique.";
-function mostFrequent(text) {
-  let arr = text.split("");
+// let newString = "A cat with rabiestreatsa slothto know more about archeology.";
+let newString = `""''"""''""""""""""""""'''''''''''''''''''''''''''''''''''''''''''''''''''`;
+/* function mostFrequent(text) {
+  let len = text.length;
 
   let myMap = new Map();
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i] === "." || arr[i] === " " || arr[i] === ",") {
-    } else if (myMap.has(arr[i])) {
-      let temp = myMap.get(arr[i]) + 1;
-      myMap.set(arr[i], temp);
-    } else if (!myMap.has(arr[i])) {
-      myMap.set(arr[i], 1);
+  for (let i = 0; i < len; i++) {
+    let char = text.charAt(i);
+
+    if (char === "." || char === ",") {
+    } else if (myMap.has(char)) {
+      let temp = myMap.get(char) + 1;
+      myMap.set(char, temp);
+    } else if (!myMap.has(char)) {
+      myMap.set(char, 1);
     }
   }
-  return myMap;
-  //   for(let i=0;i<Map.size;i++){
+  // return myMap;
+  const iterator1 = myMap.values();
+  const iterator = myMap.keys();
+  let max = 0;
+  let aplhabet = "";
+  for (let i = 0; i < myMap.size; i++) {
+    let num = iterator1.next().value;
+    let char = iterator.next().value;
+    if (num > max) {
+      max = num;
+      aplhabet = char;
+    }
+  }
+  return aplhabet;
+} */
 
-  //   }
+function mostFrequent(text) {
+  let len = text.length;
+
+  let myMap = new Map();
+  for (let i = 0; i < len; i++) {
+    let char = text.charAt(i);
+
+    if (char === ".") {
+    } else if (myMap.has(char)) {
+      let temp = myMap.get(char) + 1;
+      myMap.set(char, temp);
+    } else if (!myMap.has(char)) {
+      myMap.set(char, 1);
+    }
+  }
+  const iterator = myMap.keys();
+  const iterator1 = myMap.values();
+
+  let max = 0;
+  let aplhabet = [];
+  for (let i = 0; i < myMap.size; i++) {
+    let num = iterator1.next().value;
+    let char = iterator.next().value;
+    if (num > max) {
+      max = num;
+      aplhabet.push(char);
+    }
+  }
+  if (aplhabet.length === 1) return aplhabet[0] + max;
+  let ans = "";
+  let ansnum = 257;
+  for (let i = 0; i < aplhabet.length; i++) {
+    let num = aplhabet[i].charCodeAt(0);
+    if (num < ansnum) {
+      ans = aplhabet[i];
+    }
+  }
+  return ans + max;
 }
-console.log(mostFrequent(newString));
+// console.log(mostFrequent(newString));
+
+function frequentWords(words, k) {
+  let myMap = new Map();
+  for (let i = 0; i < words.length; i++) {
+    if (myMap.has(words[i])) {
+      myMap[words[i]] += 1;
+    } else myMap[words[i]] = 1;
+  }
+  return myMap;
+}

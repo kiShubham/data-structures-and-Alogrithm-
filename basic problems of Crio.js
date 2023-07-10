@@ -315,7 +315,7 @@ function rotateArrayLeftByK(n, k, arr) {
   }
   return arr;
 }
-console.log(rotateArrayLeftByK(7, 9, nums));
+// console.log(rotateArrayLeftByK(7, 9, nums));
 
 function rotateArrayRight(n, k, arr) {
   k = k % n;
@@ -342,3 +342,11 @@ function rotateArrayRight(n, k, arr) {
 function reverseArray(arr, i, j) {
   arr.reverse();
 }
+
+var js = (function (x) {
+  return x * x;
+})(10);
+// console.log(js); //iife functions
+let j = 10;
+j *= 5;
+console.log(j);
