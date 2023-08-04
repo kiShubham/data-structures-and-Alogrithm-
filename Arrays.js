@@ -10,6 +10,7 @@ easy :
 6.Left rotate an array by D places
 7.Move Zeros to end
 8.Linear Search
+9. union of two sorted array ;
 
 
 
@@ -238,4 +239,45 @@ function moveZerosOp(arr) {
   return arr;
 }
 
-console.log(moveZerosOp(zr));
+// console.log(moveZerosOp(zr));
+
+// !9. union of two sorted array ; //merged two sorted array ;
+let sarr1 = [1, 1, 2, 3, 4];
+let sarr2 = [2, 3, 4, 4, 5, 6];
+//op=[1,2,3,4,5,6];
+
+function unionSorted(arr1, arr2) {
+  let ans = [];
+  let m = arr1.length;
+  let n = arr2.length;
+  let i = 0;
+  j = 0;
+  while (i < m && j < n) {
+    if (arr1[i] <= arr2[j] || j == n) {
+      if (ans.length === 0 || ans[ans.length - 1] != arr1[i]) {
+        ans.push(arr1[i]);
+      }
+      i++;
+    } else if (arr1[i] >= arr2[j] || i == m) {
+      if (ans.length === 0 || ans[ans.length - 1] != arr2[j]) {
+        ans.push(arr2[j]);
+      }
+      j++;
+    }
+  }
+  while (i < m) {
+    if (ans.length === 0 || ans[ans.length - 1] != arr1[i]) {
+      ans.push(arr1[i]);
+    }
+    i++;
+  }
+  while (j < n) {
+    if (ans.length === 0 || ans[ans.length - 1] != arr2[j]) {
+      ans.push(arr2[j]);
+    }
+    j++;
+  }
+  return ans;
+}
+
+console.log(unionSorted(sarr1, sarr2)); // [ 1, 2, 3, 4, 5, 6 ]
