@@ -10,8 +10,12 @@ easy :
 6.Left rotate an array by D places
 7.Move Zeros to end
 8.Linear Search
-9. union of two sorted array ;
-
+9.Union of two sorted array ;
+10.Find missing number in an array
+11.Maximum Consecutive Ones
+12.Find the number that appears once, …
+13.Longest subarray with given sum K(p…
+14.Longest subarray with sum K (Positi…
 
 
 */
@@ -280,4 +284,46 @@ function unionSorted(arr1, arr2) {
   return ans;
 }
 
-console.log(unionSorted(sarr1, sarr2)); // [ 1, 2, 3, 4, 5, 6 ]
+// console.log(unionSorted(sarr1, sarr2)); // [ 1, 2, 3, 4, 5, 6 ]
+
+//!intersection of two sorted array ;
+let a = [1, 2, 2, 3, 3, 4, 5, 6, 7];
+let b = [2, 3, 3, 5, 5, 6];
+/* 
+o/p :  [2,3,3,5,6] only the one who has pair ;
+use the two pointers;
+1.which has smaller one at first that will move ; 
+*/
+
+const intersectionArrays = (arr1, arr2) => {
+  let ans = [];
+  let m = arr1.length;
+  let n = arr2.length;
+  let i = 0;
+  let j = 0;
+  while (i < m && j < n) {
+    if (arr1[i] < arr2[j]) {
+      i++;
+    } else if (arr1[i] > arr2[j]) {
+      j++;
+    } else {
+      ans.push(arr1[i]);
+      i++;
+      j++;
+    }
+  }
+  return ans;
+};
+console.log(intersectionArrays(a, b));
+/* 
+1 0
+2 0
+3 0
+3 1
+4 1
+5 1
+5 2
+5 3
+6 3
+7 3
+ */
