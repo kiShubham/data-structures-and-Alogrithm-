@@ -13,7 +13,7 @@ const myMap = new Map();
 
  ! 2. Map.prototype.size() ;
  const map1 = new Map();
-
+        key   value
 map1.set('a', 'alpha');
 map1.set('b', 'beta');
 map1.set('g', 'gamma');
