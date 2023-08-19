@@ -1,4 +1,5 @@
 /* 
+n² ,
 sriver :
 14Q easy , 14 medium , 12 hard ;
 easy :
@@ -10,17 +11,27 @@ easy :
 6.Left rotate an array by D places
 7.Move Zeros to end
 8.Linear Search
-9.Union of two sorted array ;
-10.Find missing number in an array
+9.Union of two sorted array ; 
+intersection of arrays
+! 10.Find missing number in an array
 11.Maximum Consecutive Ones
 12.Find the number that appears once, …
-13.Longest subarray with given sum K(p…
-14.Longest subarray with sum K (Positi…
+todo: 13.Longest subarray with given sum K(p…
+todo: 14.Longest subarray with sum K (Positi…
 
 
 */
 
 // * always say "TimeComplexity" and "SpaceComplexity" and the "ExtraSpace" we are using ;
+
+const liarr = [2, 3, 4, 5, 6, 10, 8, 9];
+//!linear search  ,search k in arr
+function linearSearch(arr, k) {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === k) return true;
+  }
+}
+// console.log(linearSearch(liarr, 10)); //true
 
 /* 
 !1.
@@ -314,7 +325,8 @@ const intersectionArrays = (arr1, arr2) => {
   }
   return ans;
 };
-console.log(intersectionArrays(a, b));
+// console.log(intersectionArrays(a, b)); // [ 2, 3, 3, 5, 6 ]
+// Timecomplxity:O(n+m) ;sc:O(1)
 /* 
 1 0
 2 0
@@ -327,3 +339,291 @@ console.log(intersectionArrays(a, b));
 6 3
 7 3
  */
+
+//todo please see striver : 10.Find missing number in an array ;use XOR
+/* Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array. 
+
+
+Input Format: N = 5, array[] = {1,2,4,5}
+Result: 3
+
+better soln: we could use Hashing ;make a hash array ; TC : O(n)+O(n) ; SC : O(n) ; still we can reduce space complexity ;
+there are Optimal solution : SUM :tc O(n) sc=O(1) ;
+XOR : n^n = 0 ; 0^n = n ; tc O(n) sc=O(1)
+*/
+let missArr = [9, 6, 4, 2, 3, 5, 7, 0, 1];
+
+const missingNumber = function (nums) {
+  let n = nums.length;
+  let arr = new Array(n + 1);
+  for (var i = 0; i < n; i++) {
+    arr[nums[i]] = "1";
+  }
+  for (var i = 0; i <= n + 1; i++) {
+    if (arr[i] !== "1") {
+      return i;
+    }
+  }
+};
+// console.log(missingNumber(missArr));
+
+const missingNumberSum = (nums) => {
+  let n = nums.length;
+  let Apsum = (n * (n + 1)) / 2;
+  let givenSum = 0;
+  for (let i = 0; i < nums.length; i++) {
+    givenSum += nums[i];
+  }
+  return `missing Number is : ${Apsum - givenSum}`;
+};
+// console.log(missingNumberSum(missArr)); //tc O(n) sc O(1)
+//but the problem is if n = 1000000 ; and the Apsum = 1000000*100001 ~= 10^10{power};
+// this will overflow and the value cant be stored in a interger ;
+
+// ! very important;
+const missingNumberXOR = (nums) => {
+  let n = nums.length;
+  let xor1 = 0; // for 0to N natural no.
+  let xor2 = 0; // for given nums number ;
+  for (let i = 0; i < n; i++) {
+    xor2 = xor2 ^ nums[i]; //0^9^6^4^2^3^5^7^0^1
+    xor1 = xor1 ^ (i + 1); // 0^1^2^3^4^5^6^7^8^9
+  }
+  return xor1 ^ xor2; //8
+};
+// console.log(missingNumberXOR(missArr)); //tc O(n) sc O(1)
+
+// ! 11.Maximum Consecutive Ones
+let consecutive = [1, 1, 0, 1, 1, 1, 0, 0, 1, 1]; //o/p: 3;
+const maxConsecutiveOnes = (arr) => {
+  let n = arr.length;
+  let max = 0;
+  let count = 0;
+  for (let i = 0; i < n; i++) {
+    if (arr[i] == 1) {
+      count++;
+      if (count > max) max = count;
+    } else if (arr[i] == 0) count = 0;
+  }
+  return max;
+};
+// console.log(maxConsecutiveOnes(consecutive));
+
+//!12. Find the number that appears once, and the other numbers twiceb
+/* 
+brute force - double loop;
+better: hash array , hash map ; 
+optimal : Xor the whole given array ;n^n = 0 and 0^n = n ;
+since every element except ans is coming twice , therefore , n^n will be 0 and ans^0 = ans ;
+*/
+
+let onceArr = [1, 1, 2, 3, 3, 4, 4]; //o/p: 2
+
+function OnceInTwice(arr) {
+  let ans = 0;
+  for (let i = 0; i < arr.length; i++) {
+    ans = ans ^ arr[i];
+  }
+  return ans;
+}
+// console.log(OnceInTwice(onceArr)); // 2
+
+//! extra Q:Given an integer array nums where every element appears three times except for one, which appears exactly once. Find the single element and return it.
+// use Hashmap ;sc :O(N),tc:O(N) we need to find one solution such sc:O(1) ;
+
+const singleNumber = function (nums) {
+  let ans = 0;
+  let n = nums.length;
+  let myMap = new Map();
+  for (let i = 0; i < n; i++) {
+    if (myMap.has(nums[i])) {
+      let temp = myMap.get(nums[i]);
+      myMap.set(nums[i], temp + 1);
+    } else {
+      myMap.set(nums[i], 1);
+    }
+  }
+  const iterator = myMap.keys();
+  const iterator1 = myMap.values();
+  for (let i = 0; i < myMap.size; i++) {
+    let num = iterator1.next().value;
+    let key = iterator.next().value;
+    if (num == 1) ans = key;
+  }
+
+  return ans;
+};
+
+// console.log(singleNumber([0, 1, 0, 1, 0, 1, 99]));
+
+/*
+!13.Longest subarray with given sum K( positive number array ) givn k = 3 ;
+subarray-contigous part of array ;
+1.brute : we will generate all the subarrays, find there sum and compare it with k ;tc:(n^3,or ,n^2)
+2.better:use hashmap  ;tc:O(N) ,sc:O(n)
+3.optimal use pointers ;tc:O(N) ,sc=0(1)
+
+              0, 1, 2, 3, 4, 5, 6, 7 ,8 ,9 ;
+*/
+let subArr = [1, 2, 3, 1, 1, 1, 0, -1, -1, 2, 1, 4, 2, 3];
+
+const LongestSubArraySumBrute1 = (arr, k) => {
+  //tc:O(n^2)
+  let l = 0; //lenght of subArray
+  let n = arr.length;
+  let num = 0;
+  for (let i = 0; i < n; i++) {
+    let sum = 0;
+    let count = 0;
+    for (let j = i; j < n; j++) {
+      sum += arr[j];
+      count++;
+      if (sum === k) {
+        sum = 0;
+        if (count > l) {
+          l = count;
+          num = i;
+        }
+        // break;
+      }
+      if (sum > k) break;
+    }
+  }
+  return [l, num];
+};
+// console.log(LongestSubArraySumBrute1(subArr, 3));
+
+const LongestSubArraySumBrute2 = (arr, k) => {
+  //tc:O(n^3)
+  let l = 0; //lenght of subArray
+  let n = arr.length;
+  let num = 0;
+  for (let i = 0; i < n; i++) {
+    for (let j = i; j < n; j++) {
+      let sum = 0;
+      let count = 0;
+      for (let p = i; p <= j; p++) {
+        sum += arr[p];
+        count++;
+        if (sum === k) {
+          if (count > l) {
+            l = count;
+            num = i;
+          }
+        }
+      }
+    }
+  }
+  return [l, num];
+};
+// console.log(LongestSubArraySumBrute2(subArr, 3));
+
+// const LongestSubArraySumBetter = (arr, k) => {
+//   let myMap = new Map();
+//   let sum = 0;
+//   let maxLen = 0;
+//   for (let i = 0; i < arr.length; i++) {
+//     sum += arr[i];
+//     if (sum === k) {
+//       maxLen = Math.max(maxLen, i + 1);
+//     }
+//     let remainder = sum - k;
+//   if(myMap.has(remainder) !=)
+// }
+//   return maxLen;
+// };
+//  i     j  i     j
+// [1, 2, 1, 1, 1, 1, 0, -1, -1, 2, 1, 4, 2, 3];k=6
+
+const LongestSubArraySumOptimal = (arr, k) => {
+  let n = arr.length;
+  let len = 0;
+  let sum = 0,
+    i = 0,
+    j = 0;
+  while (j < n) {
+    sum += arr[j];
+    if (sum < k) {
+      j++;
+    } else if (sum === k) {
+      len = Math.max(len, j - i + 1);
+      sum = sum - arr[i];
+      i++;
+      j++;
+    } else if (sum > k) {
+      i++;
+    }
+  }
+  return len;
+};
+// console.log(LongestSubArraySumOptimal(subArr, 6));
+
+/* 
+!Q . two sum problem ,
+
+todo: [1,3,6,7,8,12] target = 14 ;
+return the index of number add up to target ;here [2,4] ,6 and 8 ;
+brute force -> double loop check for every element + every other element = target,tc =O(n2);
+better ->hashing , tc =  O(n) to O(logn) to O(n2) ;
+optimal --> sort then search using pointer ; tc->O(n+logn+n+n+n) => tc = O(nlogn);
+
+*/
+
+// let twoArr = [1, 3, 6, 7, 8, 12];
+let twoArr = [2, 7, 11, 15];
+
+const twosumBetter = (arr, target) => {
+  let n = arr.length;
+  const myMap = new Map();
+  let p = 0;
+  while (p < n) {
+    let search = target - arr[p];
+    const bool = myMap.has(search);
+    if (bool) {
+      let q = myMap.get(search);
+      return [p, q];
+    } else {
+      myMap.set(arr[p], p);
+      p++;
+    }
+  }
+  return -1; // dont exist ;
+};
+// console.log(twosumBetter(twoArr, 14));
+// console.log(twosumBetter(twoArr, 9));
+
+const twoSumOptimal = (nums, target) => {
+  let n = nums.length;
+  let l = 0,
+    r = n - 1;
+
+  let arr = new Array(n); //copy of original nums;
+  for (var i = 0; i < n; i++) {
+    arr[i] = nums[i];
+  }
+  //sort the array  nums in increasing order;
+  nums.sort(function (a, b) {
+    return a - b;
+  });
+
+  while (l < r) {
+    let sum = nums[l] + nums[r];
+    if (target == sum) {
+      break;
+    } else if (target > sum) l++;
+    else if (target < sum) r--;
+  }
+
+  var x = 0,
+    y = 0;
+
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i] == nums[l]) x = i;
+  }
+  for (var j = 0; j < arr.length; j++) {
+    if (arr[j] == nums[r] && j != x) y = j;
+  }
+  return [x, y];
+};
+
+console.log(twoSumOptimal(twoArr, 9));
