@@ -564,9 +564,14 @@ const LongestSubArraySumOptimal = (arr, k) => {
 todo: [1,3,6,7,8,12] target = 14 ;
 return the index of number add up to target ;here [2,4] ,6 and 8 ;
 brute force -> double loop check for every element + every other element = target,tc =O(n2);
+
 better ->hashing , tc =  O(n) to O(logn) to O(n2) ;
 optimal --> sort then search using pointer ; tc->O(n+logn+n+n+n) => tc = O(nlogn);
 
+
+there are two variety of the Question : 
+1. return boolean if there exist ay arr[i]+arr[j] = target ;for this optimal solution is the best ;
+2. return [i,j] ;for this better soln using hashing is the optimal one ;
 */
 
 // let twoArr = [1, 3, 6, 7, 8, 12];
