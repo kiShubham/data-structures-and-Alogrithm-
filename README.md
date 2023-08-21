@@ -1,14 +1,19 @@
 # data-structures-and-Alogrithm-
 
+- algorithm to rewise :
+
+1. kadanes algorithm , arrays.js
+2. dutch national flag ,""
+3. Moores algorithm , ""
+
 use better comments extension for ease to read ;
 daily practice will make me better at coding ;
 using javascript
 
-* make notes of methods of all alogrithm ;
-* like if there are 14 types of question in binary search and we are using 10 types of way / methods for solving those question ;
-* so make notes of those 10 methods ;
-* 
-
+- make notes of methods of all alogrithm ;
+- like if there are 14 types of question in binary search and we are using 10 types of way / methods for solving those question ;
+- so make notes of those 10 methods ;
+-
 
 # 1. binary search
 

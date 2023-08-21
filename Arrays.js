@@ -19,6 +19,12 @@ intersection of arrays
 todo: 13.Longest subarray with given sum K(p…
 todo: 14.Longest subarray with sum K (Positi…
 
+  15.2Sum Problem
+* 16.Sort an array of 0's 1's and 2's, dutch national flag algorithm ; 
+* 17.Majority Element (>n/2 times) , moores algorithm  ;
+* 18 .Kadane’s Algorithm : Maximum Subarray Sum in an Array
+  19. Best Time to Buy and Sell Stock
+
 
 */
 
@@ -559,7 +565,7 @@ const LongestSubArraySumOptimal = (arr, k) => {
 // console.log(LongestSubArraySumOptimal(subArr, 6));
 
 /* 
-!Q . two sum problem ,
+!15Q . two sum problem ,
 
 todo: [1,3,6,7,8,12] target = 14 ;
 return the index of number add up to target ;here [2,4] ,6 and 8 ;
@@ -631,4 +637,253 @@ const twoSumOptimal = (nums, target) => {
   return [x, y];
 };
 
-console.log(twoSumOptimal(twoArr, 9));
+// console.log(twoSumOptimal(twoArr, 9));
+
+/* 
+!16 Q.Sort an array of 0's 1's and 2's ,
+todo : please please watch the video to understand fully , 
+todo : you might think you got this but you should watch the "striver video" on this ;  
+Input: nums = [2,0,2,1,1,0]
+Output: [0,0,1,1,2,2]
+better -> hash or  use arrys [2,2,2] no of 0,1 and 2 at the index later make new array out of it and return;
+optimal -> 
+*Algorithm:  Dutch national flag algorithm ,3 pointer
+*/
+
+// let NumArr = [2, 0, 2, 1, 1, 0];
+let NumArr = [2, 0, 1];
+
+const sortArray = (nums) => {
+  let n = nums.length;
+  let low = 0,
+    mid = 0,
+    high = n - 1;
+  while (mid <= high) {
+    if (nums[mid] === 0) {
+      let temp = nums[mid];
+      nums[mid] = nums[low];
+      nums[low] = temp;
+      console.log("iteration 0: " + nums);
+      mid++;
+      low++;
+    } else if (nums[mid] === 1) {
+      console.log("iteration1 : " + nums);
+      mid++;
+    } else if (nums[mid] === 2) {
+      let temp = nums[mid];
+      nums[mid] = nums[high];
+      nums[high] = temp;
+      high--;
+      console.log("iteration 2 : " + nums);
+    }
+  }
+  return nums;
+};
+// console.log(sortArray(NumArr));
+
+/* 
+!Q17. majority elements ;
+Given an array of N integers, write a program to return an element that occurs more than N/2 times in the given array.
+You may consider that such an element always exists in the array.
+n = length of array ;
+ 
+take floor value for n/2 , 
+Input: nums = [3,2,3] , so n = 3 ; math.floor(3/2) = 1 ;
+Output: 3 , 
+
+brute: nested loop ;
+better : hash map ;
+optimal '
+*/
+const mjElem = [2, 2, 1, 3, 1, 1, 3, 1, 1];
+// tc = O(nlogn)+O(n); sc=O(n) for map
+// use hash map as additional space ; so more to optimise
+
+const majorityElemBetter = (nums) => {
+  let n = nums.length;
+  let myMap = new Map();
+  for (let i = 0; i < n; i++) {
+    //tc forloop=O(n) and if the map is ordered map - O(logn)
+    if (myMap.has(nums[i])) {
+      let count = myMap.get(nums[i]);
+      myMap.set(nums[i], count + 1);
+    } else {
+      myMap.set(nums[i], 1);
+    }
+  }
+  let max = Math.floor(n / 2);
+  let ans = 0;
+  const keyIterator = myMap.keys();
+  const valueIterator = myMap.values();
+  for (let i = 0; i < myMap.size; i++) {
+    // tc=O(N) traversing in map
+    let value = valueIterator.next().value;
+    let key = keyIterator.next().value;
+    if (value > max) {
+      ans = key;
+    }
+  }
+  return ans;
+};
+
+// console.log(majorityElemBetter(mjElem));
+
+//* Algoritm : Moore's voting algorithm ;understand by watching video striver majority Element;;
+//  [2, 2, 1, 3, 1, 1, 3, 1, 1]
+function majorityElemOptimal(nums) {
+  let n = nums.length;
+  let i = 1;
+  let count = 1;
+  let key = nums[0];
+  while (i < n) {
+    if (count === 0) {
+      key = nums[i];
+    }
+    if (key === nums[i]) {
+      count++;
+    } else if (key !== nums[i]) {
+      count--;
+    }
+    i++;
+  }
+  return key;
+}
+// console.log(majorityElemOptimal(mjElem));
+
+/* 
+! 18Q. Kadane’s Algorithm : Maximum Subarray Sum in an Array
+  arr = [-2,-3,4,-1,-2,1,5,-3] ans = 7;
+  brute - trying out all the subArrays -> nested forloop; tc=O(n3) n3 hi h n2 nhi;
+  better - nested forloop - tc=O(n2)
+* optimal - kadanes algorithm 
+*/
+// const kadaneArr = [-2, -3, 4, -1, -2, 1, 5, -3]; // 7
+const kadaneArr = [-2, 1, -3, 4, -1, 2, 1, -5, 4]; // 6
+
+const KadaneAlgo = (nums) => {
+  let n = nums.length;
+  let max = Number.MIN_SAFE_INTEGER;
+
+  let sum = 0;
+  let i = 0;
+  while (i < n) {
+    sum += nums[i];
+    if (sum > max) {
+      max = sum;
+    }
+    if (sum < 0) {
+      sum = 0;
+    }
+    i++;
+  }
+  return max;
+};
+// console.log(KadaneAlgo(kadaneArr));
+
+/*
+! 19Q.  Best Time to Buy and Sell Stock -> interviewer will ask for space optimisation technique
+You are given an array prices where prices[i] is the price of a given stock on the ith day.
+
+You want to maximize your profit by choosing a single day to buy one stock and 
+choosing a different day in the future to sell that stock.
+
+Return the maximum profit you can achieve from this transaction. 
+If you cannot achieve any profit, return 0.
+
+we will use Dynamic programming ;dp means remembering the past ; 
+Tc = O(n)
+*/
+const stock = [7, 1, 5, 3, 6, 4];
+const buyStocks = (nums) => {
+  let n = nums.length;
+  let min = nums[0];
+  let maxProfit = 0; //if we buy and sell on same day
+  let i = 1;
+  while (i < n) {
+    let currProfit = nums[i] - min;
+    maxProfit = Math.max(maxProfit, currProfit);
+    min = Math.min(nums[i], min); // here using dp ; remembering the past
+
+    i++;
+  }
+  return maxProfit;
+};
+// console.log(buyStocks(stock));
+
+/* 
+! 20Q.Rearrange Array Elements by Sign 
+There’s an array ‘A’ of size ‘N’ with an equal number of positive and negative elements.
+Without altering the relative order of positive and negative elements, 
+you must return an array of alternately positive and negative values.
+brute force-> make two separate array pos=[all positve num in array num],  neg= [all neg];
+arrange it again indexwise in nums ;tc=o(n+n/2)
+
+
+*/
+const arrElem = [3, 1, -2, -5, 2, -4];
+var rearrangeArray = function (nums) {
+  let n = nums.length;
+  let posIdx = 0;
+  let negIdx = 1;
+  let ans = new Array(n);
+  for (let i = 0; i < n; i++) {
+    if (nums[i] < 0) {
+      ans[negIdx] = nums[i];
+      negIdx += 2;
+    } else {
+      ans[posIdx] = nums[i];
+      posIdx += 2;
+    }
+  }
+  return ans;
+};
+// console.log(rearrangeArray(arrElem));
+
+/* 
+similar question with some variety ;
+!Q . This is an array "A" of size "N" with positive and negative element , without altering 
+the relative order of positive and negative numbers , you must return an array of alternative positive and negative value ;
+ input : [ 1, 2, -4, -5 ,-6]
+output : [ 1, -4, 2, -5 , -6 ] 
+we will like to use the brute force in this case ->
+pos = [all pos number ]
+neg = [all neg number];
+
+*/
+const arr9 = [1, 2, -4, -5, -6];
+
+const alternateRearrangeArray = (nums) => {
+  // tc =O(2n)
+  let n = nums.length;
+  let pos = [];
+  let neg = [];
+  for (let i = 0; i < n; i++) {
+    if (nums[i] < 0) neg.push(nums[i]);
+    else {
+      pos.push(nums[i]);
+    }
+  }
+  if (pos.length > neg.length) {
+    for (let i = 0; i < neg.length; i++) {
+      nums[i * 2] = pos[i];
+      nums[2 * i + 1] = neg[i];
+    }
+    let idx = neg.length * 2;
+    for (let i = neg.length; i <= pos.length; i++) {
+      nums[idx] = pos[i];
+      idx++;
+    }
+  } else {
+    for (let i = 0; i < pos.length; i++) {
+      nums[i * 2] = pos[i];
+      nums[2 * i + 1] = neg[i];
+    }
+    let idx = pos.length * 2;
+    for (let i = pos.length; i < neg.length; i++) {
+      nums[idx] = neg[i];
+      idx++;
+    }
+  }
+  return nums;
+};
+console.log(alternateRearrangeArray(arr9));
