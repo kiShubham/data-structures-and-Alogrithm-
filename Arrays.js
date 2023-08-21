@@ -24,7 +24,9 @@ todo: 14.Longest subarray with sum K (Positi…
 * 17.Majority Element (>n/2 times) , moores algorithm  ;
 * 18 .Kadane’s Algorithm : Maximum Subarray Sum in an Array
   19. Best Time to Buy and Sell Stock
-
+20.Next Permutation
+21. Leaders in array  ;
+22.Longest Successive Elements
 
 */
 
@@ -850,7 +852,7 @@ pos = [all pos number ]
 neg = [all neg number];
 
 */
-const arr9 = [1, 2, -4, -5, -6];
+const arr9 = [1, 2, -4, -5, -6]; // [ 1, -4, 2, -5, -6 ]
 
 const alternateRearrangeArray = (nums) => {
   // tc =O(2n)
@@ -886,4 +888,121 @@ const alternateRearrangeArray = (nums) => {
   }
   return nums;
 };
-console.log(alternateRearrangeArray(arr9));
+// console.log(alternateRearrangeArray(arr9)); // [ 1, -4, 2, -5, -6 ]
+
+/* 
+!20Q.
+*/
+
+/* 
+!21Q. Leaders in an Array
+Problem Statement: Given an array, print all the elements which are leaders. 
+A Leader is an element that is greater than all of the elements on its right side in the array.
+Input:
+ arr = [10, 22, 12, 3, 0, 6]
+Output:
+ 22 12 6
+
+*Brute: assume arr[i] as a leader ,in nested loop iterate from i+1 to n-1 , check if all are small , then arr[i] will be a leader ;
+tc=~O(n2) ,not exactly it will be near about ;sc=maxO(n2) min O(1): if no leader found ;
+*optimal : iterate from right , then store max in a variable ;check arr[i]>max;  update max as moving ;
+
+
+*/
+//assume all intergers of array are greater than -1 ;
+const lead = [10, 22, 12, 3, 0, 6];
+
+function leaderInArray(nums) {
+  let n = nums.length;
+  let max = Number.MIN_SAFE_INTEGER;
+  let leaders = [nums[n - 1]];
+  for (let i = n - 2; i >= 0; i--) {
+    max = Math.max(nums[i + 1], max);
+    if (nums[i] > max) leaders.push(nums[i]);
+  }
+  return leaders;
+}
+
+// console.log(leaderInArray(lead));
+
+/* 
+!22Q.Longest Successive Elements or  128. Longest Consecutive Sequence
+Given an unsorted array of integers nums, 
+return the length of the longest consecutive elements sequence.
+
+You must write an algorithm that runs in O(n) time.
+
+Input: nums = [100,4,200,1,3,2]
+Output: 4
+Explanation: The longest consecutive elements sequence is [1, 2, 3, 4]. Therefore its length is 4.
+*extereme brute: O(n2) , nested loop check next element , maintain count varible ; 
+*brute: sort nlogn, check consecutive(gap should be 1) length O(n) ;
+*/
+// let longArr = [100, 102, 100, 101, 101, 4, 4, 3, 3, 2, 2, 2, 1, 1, 1, 103]; //4
+let longArr = [100, 4, 200, 1, 3, 2]; //4
+//better soln;
+// sorted =[1,1,1,2,2,2,3,3,4,4,100,100,101,101,102,103]
+function longestConsSequence(nums) {
+  let n = nums.length;
+  if (n === 0) return 0; //[]
+
+  let maxCount = 1;
+  let count = 1;
+
+  // 1. sort the arr
+  nums.sort((a, b) => a - b);
+  for (let i = 1; i < n; i++) {
+    if (nums[i] === nums[i - 1]) {
+    } else if (nums[i] - 1 === nums[i - 1]) {
+      count++;
+      maxCount = Math.max(maxCount, count);
+    } else if (nums[i] - 1 !== nums[i - 1]) {
+      count = 1;
+    }
+  }
+  return maxCount;
+}
+
+// console.log(longestConsSequence(long2));
+let long2 = [9, 1, 4, 7, 3, -1, 0, 5, 8, -1, 6];
+
+//optimal ;using hashset ; //O(3n) = O(n)
+function longestConsSequenceOptimal(nums) {
+  let n = nums.length;
+  if (n == 0) return 0;
+  let mySet = new Set(); //O(1)
+  let count = 1;
+  let maxCount = 1;
+
+  nums.forEach((element) => mySet.add(element)); //O(n)
+
+  const iterator1 = mySet[Symbol.iterator]();
+
+  for (let i = 0; i < mySet.size; i++) {
+    //O(n)
+    let temp = iterator1.next().value;
+    if (mySet.has(temp - 1)) {
+      //skip
+    }
+    if (!mySet.has(temp - 1)) {
+      let bool = true;
+      let k = temp;
+      while (bool) {
+        //O(2n)
+        if (mySet.has(k + 1)) {
+          count++;
+        }
+        if (!mySet.has(k + 1)) {
+          bool = false;
+          count = 1;
+        }
+
+        k += 1;
+        maxCount = Math.max(count, maxCount);
+      }
+    }
+  }
+  return maxCount;
+}
+
+console.log(longestConsSequenceOptimal(long2));
