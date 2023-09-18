@@ -1,3 +1,5 @@
+// 19Q . total ;
+
 // use better comments extension for ease to read ;
 
 // question m agar "sorted" word ka use kiya gya h ,tou chances are binary search applicable;
