@@ -190,8 +190,7 @@ function nextLargerElement(n, arr) {
         ans.push(stack[stack.length - 1]);
       }
     }
-    // console.log(ans, arr[i], stack);
-    // console.log(arr[i], stack, ans ,stack.length);
+
     stack.push(arr[i]);
   }
   return ans.reverse();
