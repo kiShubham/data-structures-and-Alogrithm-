@@ -329,7 +329,7 @@ function span(n, arr) {
   return ans;
 }
 
-console.log(span(arr.length, arr));
+// console.log(span(arr.length, arr));
 
 // using proper stack concept
 // use two array separate as idx and stack ;
@@ -573,5 +573,63 @@ function isBrackets(s) {
   if (arr.length > 0) return false;
   return true;
 }
-// console.log(isBrackets("()[]{}")); //true;
+// console.log(isBrackets("{(())[]}")); //true;
 // console.log(isBrackets("()[]}")); //false;
+function longestValideParenthesis(s) {
+  if (!s.length) return 0;
+  let x = [];
+
+  for (let i = 0; i < s.length; i++) {
+    x.push({ element: s[i], index: i });
+  }
+
+  console.log(x);
+  let arr = [];
+  let i = 0;
+
+  while (i < x.length) {
+    if (
+      arr.length &&
+      arr[arr.length - 1].element === "(" &&
+      x[i].element === ")"
+    )
+      arr.pop();
+    else if (
+      arr.length &&
+      arr[arr.length - 1].element === "{" &&
+      x[i].element === "}"
+    )
+      arr.pop();
+    else if (
+      arr.length &&
+      arr[arr.length - 1].element === "[" &&
+      x[i].element === "]"
+    )
+      arr.pop();
+    else arr.push(x[i]);
+    i++;
+  }
+  //if stack become empty , means everyone has corrent pair ;
+  if (!arr.length) return x.length;
+
+  let max1 = arr[0].index;
+  let max2 = x[x.length - 1].index - arr[arr.length - 1].index;
+  let max3 = max1 > max2 ? max1 : max2;
+
+  // console.log(arr);
+  for (let i = 1; i < arr.length; i++) {
+    let gap = arr[i].index - arr[i - 1].index - 1;
+    max3 = gap > max3 ? gap : max3;
+  }
+  return max3;
+}
+// console.log(longestValideParenthesis("()(()(())")); // 6
+// console.log(longestValideParenthesis(")()())")); // 4
+// console.log(longestValideParenthesis("((()")); // 2
+// console.log(longestValideParenthesis("()(()))))")); //6
+// console.log(longestValideParenthesis("")); //0
+console.log(longestValideParenthesis("()")); //0
+
+//* [ { element: ')', index: 0 }]
+//* [ { element: ')', index: 0 }, { element: ')', index: 5 } ]
+//* [ { element: ')', index: 0 }, { element: ')', index: 5 },{ element: ')', index: 6 } ... ]
