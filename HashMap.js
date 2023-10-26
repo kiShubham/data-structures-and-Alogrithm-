@@ -214,3 +214,13 @@ function frequentWords(words, k) {
   }
   return myMap;
 }
+
+const map1 = new Map();
+
+map1.set("a", "alpha");
+map1.set("b", "beta");
+map1.set("g", "gamma");
+
+console.log(map1);
+const outputArray = Object.values(map1);
+console.log(outputArray); //not working , but workng for a: alpha ; ":" not for "=>"
