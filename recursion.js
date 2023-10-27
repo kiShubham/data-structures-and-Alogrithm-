@@ -142,3 +142,18 @@ const reverseString = (string) => {
  * Input : [1,2,3] -->output :[[],[1],[1],[2],[3],[1,3],[2,3],[1,2],[1,2,3]] ;
  * input : [0]  ---> output : [[],[0]] ;
  */
+
+function nthFibonacciNumber(n) {
+  if (n <= 1) return n;
+  let a = 0;
+  let b = 1;
+  let ans = 0;
+  for (let i = 2; i <= n; i++) {
+    ans = a + b;
+    let temp = b;
+    b += a;
+    a = temp;
+  }
+  return ans;
+}
+// console.log(nthFibonacciNumber(4));
