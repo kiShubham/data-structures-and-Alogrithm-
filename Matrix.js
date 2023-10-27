@@ -1,7 +1,7 @@
 /*   
 todo: 1Q. print spiral matrix ;
-todo: 1Q. Rotate the matrix ;
-todo: 1Q. set Matrix Zero's
+todo: 2Q. Rotate the matrix ;
+todo: 3Q. set Matrix Zero's
 
 */
 const matrix = [
@@ -54,4 +54,4 @@ function SpiralMatrix(matrix) {
 
   return res;
 }
-console.log(SpiralMatrix(matrix));
+// console.log(SpiralMatrix(matrix));
