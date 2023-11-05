@@ -1,30 +1,30 @@
 //understanding callStacks when async await runs ;
 
-const p = new Promise((resolve, reject) => {
-  setTimeout(() => {
-    resolve("p Promise resolved value !!!");
-  }, 10000);
-});
+// const p = new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     resolve("p Promise resolved value !!!");
+//   }, 10000);
+// });
 
-const Q = new Promise((resolve, reject) => {
-  setTimeout(() => {
-    resolve("Q Promise resolved value !!!");
-  }, 20000);
-});
+// const Q = new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     resolve("Q Promise resolved value !!!");
+//   }, 20000);
+// });
 
-async function getData() {
-  console.log("hello World");
+// async function getData() {
+//   console.log("hello World");
 
-  const res = await p;
-  console.log(res);
-  console.log("p namaste Javascript");
+//   const res = await p;
+//   console.log(res);
+//   console.log("p namaste Javascript");
 
-  const res2 = await Q;
-  console.log(res2);
-  console.log("Q namaste Javascript");
-}
-getData();
-console.log("outside of getData()");
+//   const res2 = await Q;
+//   console.log(res2);
+//   console.log("Q namaste Javascript");
+// }
+// getData();
+// console.log("outside of getData()");
 
 // function listenToButton() {
 //   let count = 0;
@@ -96,3 +96,35 @@ const doSomeMagic = (fun, delayTime) => {
 };
 const betterFunction = doSomeMagic(getData, 600);
  */
+
+// understanding event propagation : bubbling and capturing ;
+document.querySelector("#grandParent").addEventListener(
+  "click",
+  () => {
+    console.log("grandParent clicked");
+  },
+  true
+);
+
+document.querySelector("#parent").addEventListener(
+  "click",
+  () => {
+    console.log("Parent clicked");
+  },
+  false
+);
+document.querySelector("#child").addEventListener(
+  "click",
+  () => {
+    bool = false;
+    console.log("child clicked");
+  },
+  true
+);
+document.querySelector("#form").addEventListener("keyup", (e) => {
+  // console.log(e);
+  if (e.target.dataset.uppercase != undefined) {
+    //it means those children have uppercase custom attribute ;onlu those will run this condition
+    e.target.value = e.target.value.toUpperCase();
+  }
+});

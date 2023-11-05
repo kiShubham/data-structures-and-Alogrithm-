@@ -12,7 +12,7 @@ const matrix = [
 ];
 /*
  * timecomplexity > we are push every element so O(m*n) and we are storing it so space is same O(m*n);
-
+                             ! 1Q. print spiral matrix ;
  */
 
 function SpiralMatrix(matrix) {
@@ -55,3 +55,5 @@ function SpiralMatrix(matrix) {
   return res;
 }
 // console.log(SpiralMatrix(matrix));
+
+//                                     ! Q .set Matrix Zero's
