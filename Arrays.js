@@ -11,7 +11,7 @@ easy :
 6.Left rotate an array by D places
 7.Move Zeros to end
 8.Linear Search
-9.Union of two sorted array ; 
+9.Union of two sorted array ; dd
 intersection of arrays
 ! 10.Find missing number in an array
 11.Maximum Consecutive Ones
@@ -27,6 +27,7 @@ todo: 14.Longest subarray with sum K (Positi…
 20.Next Permutation
 21. Leaders in array  ;
 22.Longest Successive Elements
+
 
 */
 
@@ -468,12 +469,12 @@ const singleNumber = function (nums) {
 !13.Longest subarray with given sum K( positive number array ) givn k = 3 ;
 subarray-contigous part of array ;
 1.brute : we will generate all the subarrays, find there sum and compare it with k ;tc:(n^3,or ,n^2)
-2.better:use hashmap  ;tc:O(N) ,sc:O(n)
+2.better:use hashmap  ;tc:O(N) ,sc:O(n) with prefix sum
 3.optimal use pointers ;tc:O(N) ,sc=0(1)
 
               0, 1, 2, 3, 4, 5, 6, 7 ,8 ,9 ;
 */
-let subArr = [1, 2, 3, 1, 1, 1, 0, -1, -1, 2, 1, 4, 2, 3];
+let subArr = [1, 2, 3]; //[(3, 1, 1, 1, 0, -1, -1, 2, 1, 4, 2, 3)];
 
 const LongestSubArraySumBrute1 = (arr, k) => {
   //tc:O(n^2)
@@ -497,6 +498,7 @@ const LongestSubArraySumBrute1 = (arr, k) => {
       if (sum > k) break;
     }
   }
+  return c;
   return [l, num];
 };
 // console.log(LongestSubArraySumBrute1(subArr, 3));
@@ -526,47 +528,75 @@ const LongestSubArraySumBrute2 = (arr, k) => {
 };
 // console.log(LongestSubArraySumBrute2(subArr, 3));
 
-// const LongestSubArraySumBetter = (arr, k) => {
-//   let myMap = new Map();
-//   let sum = 0;
-//   let maxLen = 0;
-//   for (let i = 0; i < arr.length; i++) {
-//     sum += arr[i];
-//     if (sum === k) {
-//       maxLen = Math.max(maxLen, i + 1);
-//     }
-//     let remainder = sum - k;
-//   if(myMap.has(remainder) !=)
-// }
-//   return maxLen;
-// };
-//  i     j  i     j
-// [1, 2, 1, 1, 1, 1, 0, -1, -1, 2, 1, 4, 2, 3];k=6
-
-const LongestSubArraySumOptimal = (arr, k) => {
+// optimal solution for cases array including +ves , -ves and 0's ;
+// * we are saving prefix sum in hashmap due to timecomplexity ;
+// ! used prefix sum // best approach  for this Question ;
+function LongestSubArraySumOptimalHashing(arr, k) {
   let n = arr.length;
-  let len = 0;
-  let sum = 0,
-    i = 0,
-    j = 0;
-  while (j < n) {
-    sum += arr[j];
-    if (sum < k) {
-      j++;
-    } else if (sum === k) {
-      len = Math.max(len, j - i + 1);
-      sum = sum - arr[i];
-      i++;
-      j++;
-    } else if (sum > k) {
-      i++;
+  let preSumMap = new Map();
+  let sum = 0;
+  let maxLen = 0;
+  for (let i = 0; i < n; i++) {
+    sum += arr[i];
+
+    //* checking directly for sum;
+    if (sum === k) {
+      maxLen = Math.max(maxLen, i + 1);
+    }
+
+    //* checking for prefix sum
+    let rem = sum - k;
+    if (preSumMap.has(rem)) {
+      let len = i - preSumMap.get(rem);
+      maxLen = Math.max(maxLen, len);
+    }
+
+    //* adding in the map ;
+    if (!preSumMap.has(sum)) {
+      // this condition is very necessary ;
+      //if we need shortest this condition will not use along with logic change inabove;
+      preSumMap.set(sum, i);
     }
   }
-  return len;
+  // console.log(preSumMap);
+  return maxLen;
+}
+
+// [1, 2, 1, 1, 1, 1, 0, -1, -1, 2, 1, 4, 2, 3];k=6
+// console.log(LongestSubArraySumOptimalHashing(sample, 3)); // workking
+
+// two pointer approach ;
+//*  this is optimal for arrays containing only positives and 0's not negative ;
+const LongestSubArraySumOptimal = (arr, k) => {
+  let maxLen = 0;
+  let left = 0,
+    right = 0;
+  let n = arr.length;
+  let sum = arr[0];
+
+  while (right < n) {
+    while (left <= right && sum > k) {
+      sum -= arr[left];
+      left++;
+    }
+
+    if (sum === k) {
+      maxLen = Math.max(maxLen, right - left + 1);
+    }
+    right++; // ise neche ni likh sakte
+
+    if (right < n) {
+      // main point yha hum sum < k , check nhi kar rhe ,
+      sum += arr[right];
+    }
+  }
+  return maxLen;
 };
-// console.log(LongestSubArraySumOptimal(subArr, 6));
+//tc : O(2n) worst case  ;;; see the video for understanding tc ;sc =O(1) ;
+// console.log(LongestSubArraySumOptimal(subArr, 6)); // not working
 
 /* 
+
 !15Q . two sum problem ,
 
 todo: [1,3,6,7,8,12] target = 14 ;
@@ -1005,4 +1035,80 @@ function longestConsSequenceOptimal(nums) {
   return maxCount;
 }
 
-console.log(longestConsSequenceOptimal(long2));
+// console.log(longestConsSequenceOptimal(long2));
+
+// !Q. Number Of SubArray With Sum K
+
+//*brute:
+const numberOfSubArraysSumKBrute = (arr, k) => {
+  let count = 0;
+  let n = arr.length;
+
+  for (let i = 0; i < n; i++) {
+    let sum = 0;
+    for (let j = i; j < n; j++) {
+      sum += arr[j];
+      if (sum === k) {
+        count++;
+        // break; // do not break misses other cases ;
+      }
+    }
+  }
+  return count;
+};
+
+//*two pointer approach ;works well with all positives and zeros
+function numberOfSubArraysSumK(arr, k) {
+  let n = arr.length;
+  let left = 0,
+    right = 0;
+  let count = 0;
+  let sum = arr[0];
+
+  while (right < n) {
+    while (left <= right && sum > k) {
+      sum -= arr[left];
+      left++;
+    }
+
+    if (sum === k) {
+      count++;
+    }
+    right++; // sum ko initially arr[0] rakha h , isliye right ++ pehle karenge then
+
+    if (right < n) {
+      sum += arr[right];
+    }
+  }
+  return count;
+}
+//              0, 1, 2,  3, 4, 5  6  7  8   9
+const sample = [1, 2, 3, -3, 1, 1, 1, 4, 2, -3];
+// console.log(numberOfSubArraysSumK(sample, 3)); // giving 3 , answer is 8
+// console.log(numberOfSubArraysSumKBrute(sample, 3)); // giving 8 , perfect ;
+
+// todo:  Optimal hashing with hashmap with prefix sum;
+
+function NumberOfSubArrayWithSumKOptimal(arr, k) {
+  let count = 0;
+  let sum = 0;
+  let preSumMap = new Map();
+  let n = arr.length;
+
+  preSumMap.set(0, 1);
+
+  for (let i = 0; i < n; i++) {
+    sum += arr[i];
+    let rem = sum - k;
+
+    if (preSumMap.has(rem)) {
+      count += preSumMap.get(rem);
+    }
+
+    preSumMap.set(sum, (preSumMap.get(sum) || 0) + 1);
+  }
+
+  return count;
+}
+
+console.log(NumberOfSubArrayWithSumKOptimal(sample, 3));

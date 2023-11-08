@@ -5,9 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
+  <style>
+    div {
+      min-width: 100px;
+      min-height: 100px;
+      padding: 30px;
+      border: 1px solid black;
+    }
+  </style>
   <body>
-    <button id="clickMe">click</button>
+    <!-- <button id="clickMe">click</button> -->
     <!-- <input type="text" onkeyup="betterFunction()" /> -->
+    <div id="grandParent" style="margin: 10px">
+      <div id="parent">
+        <div id="child"></div>
+      </div>
+    </div>
+    <!-- event delegation -->
+    <div id="form">
+      <input type="text" id="name" data-uppercase />
+      <input type="text" id="pan" />
+      <input type="text" id="lastName" data-uppercase />
+    </div>
+    <!-- to define custom attribute use data-{customAttributeName} , to access: e.target.dataset.customAttributeName -->
     <script src="./script.js"></script>
   </body>
 </html>
+
+<!-- by using custom attrbute we cas give behaviral pattern to event delegation  -->
