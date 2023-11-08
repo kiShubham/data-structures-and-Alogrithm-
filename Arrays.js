@@ -1095,7 +1095,10 @@ function NumberOfSubArrayWithSumKOptimal(arr, k) {
   let preSumMap = new Map();
   let n = arr.length;
 
-  preSumMap.set(0, 1);
+  preSumMap.set(0, 1); // watch the video you will understand ;
+  // we are not using if(sum===k), just checking rem = sum-k ; sum =3 ; therefor sum-k =0;
+  //so there exist a 0 with which we can compare , so that we are puting (0,1) in map ;
+  // also if we dont do it some cases were left ; watch the video of striver on youtube ; for proper explanation ;
 
   for (let i = 0; i < n; i++) {
     sum += arr[i];
