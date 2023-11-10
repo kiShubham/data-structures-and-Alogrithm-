@@ -8,7 +8,7 @@ easy :
 3.Check if the array is sorted
 4.Remove duplicates from Sorted array , return the length of new array 
 5.Left Rotate an array by one place
-6.Left rotate an array by D places
+* 6.Left rotate an array by D places
 7.Move Zeros to end
 8.Linear Search
 9.Union of two sorted array ; dd
@@ -157,7 +157,7 @@ D = D%n , if the d is very large;; n= arr.length
 optimised way : in which sc = O(N)
 
 steps:
-1.reverse the element upto k ;
+1.reverse the element upto k index;
 2.reverse the element from k to n-1 ;
 3.reverse the whole array ;
 
@@ -166,6 +166,7 @@ steps:
 // brute force
 let rotArr2 = [1, 2, 3, 4, 5, 6, 7];
 
+//O(n) space -> O(n):used extra space
 function RotateByDPlaces(arr, D) {
   let ans = [];
   let n = arr.length;
@@ -221,6 +222,7 @@ function rotateArrayByD(arr, D) {
 
   D = D % arr.length;
 
+  // the indexing is not write it should be done from last, check infdt1 file
   reverseArray1(arr, 0, D - 1); //[321]
   reverseArray1(arr, D, arr.length - 1); //[987654]
   reverseArray1(arr, 0, arr.length - 1);

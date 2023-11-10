@@ -9,8 +9,8 @@ todo:
 * - [ ] Find Gcd of two numbers 
 *- [ 26 ] Remove Duplicates From sorted Array 
 * - [ 88 ] Merge sorted Array 
-- [ ] Find diagonal Sum
-- [ ] Rotate the Array to the Right by k steps 
+*  - [1572 ] Find diagonal Sum
+* - [ 189 ] Rotate the Array to the Right by k steps !important
 - [ ] find the sum of minimum and maximum element 
 - [ ] Write a function that reverse an array 
 - [ ] Find if the given string is a palindrome
@@ -216,7 +216,7 @@ function gcd(a, b) {
 //Given a sorted array, remove all duplicates such that each element occurs at most once in the array. Return the length of the modified array.
 //return length of the final nums array
 
-//O(n + n) =O(2n)
+//O(n + n) =O(2n) = O(n)
 function removeDuplicatesFromSortedArray(nums) {
   let n = nums.length - 1;
   let map1 = new Map();
@@ -322,3 +322,97 @@ let nums1 = [1, 2, 3, 0, 0, 0],
 
 // console.log(merge(nums1, m, nums2, n));
 // console.log(mergeSortedArray(nums1, m, nums2, n));
+
+//!  - [ ] Find diagonal Sum
+// Given an matrix of dimension n*n. Find the sum of elements present at principal diagonal of the matrix.
+// Only include the sum of all the elements on the primary diagonal and all the elements on the secondary diagonal that are not part of the primary diagonal.
+// var matrix = [
+//   [1, 2, 3, 4],
+//   [1, 2, 4, 5],
+//   [2, 3, 3, 4],
+//   [1, 1, 2, 3],
+// ];
+var matrix = [
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9],
+];
+function diagonalSum(mat) {
+  let ans = 0;
+  for (let i = 0; i < mat.length; i++) {
+    for (let j = 0; j < mat[0].length; j++) {
+      if (i == j) {
+        ans += mat[i][j];
+      }
+      if (i + j === mat.length - 1) {
+        ans += mat[i][j];
+      }
+    }
+  }
+  let index = Math.floor(mat.length / 2);
+  if (mat.length % 2 !== 0) {
+    ans = ans - mat[index][index];
+  }
+  return ans;
+}
+
+console.log(diagonalSum(matrix));
+
+function diagonalSumOptimal(mat) {
+  let n = mat.length; // take square matrix ;
+  let ans = 0;
+  let i = n;
+  let j = n;
+  while (i > 0) {
+    ans += mat[i - 1][j - 1];
+    i--, j--;
+  }
+  i = 0;
+  j = n;
+
+  while (i <= n - 1) {
+    ans += mat[i][j - 1];
+    i++;
+    j--;
+  }
+
+  let index = Math.floor(mat.length / 2);
+  if (mat.length % 2 !== 0) {
+    ans = ans - mat[index][index];
+  }
+
+  return ans;
+}
+// console.log(diagonalSumOptimal(matrix));
+
+// ! - [ ] Rotate the Array to the Right by k steps // arrays m kiya tha vo galat h leetcode par check karo ;
+//  Given an array, rotate the array to the right by k steps, where k is non-negative.
+// n is length of array , k is the steps , and nums is the array ;
+// INput : 1 2 3 4 5 6 7 : output : 5 6 7 1 2 3 4
+
+function rotateArrayIndex(arr, startIdx, endInx) {
+  while (startIdx < endInx) {
+    [arr[startIdx], arr[endInx]] = [arr[endInx], arr[startIdx]];
+    startIdx++;
+    endInx--;
+  }
+  return arr;
+}
+
+function rotateArray(k, nums) {
+  let n = nums.length;
+  k = k % n;
+  if (k === 0) return nums;
+
+  nums = rotateArrayIndex(nums, n - k, n - 1); // peche se check karenge ;
+  nums = rotateArrayIndex(nums, 0, n - k - 1);
+  nums = rotateArrayIndex(nums, 0, n - 1);
+  return nums;
+}
+
+console.log(rotateArray(2, [-1, -100, 3, 99]));
+
+// - [ ] find the sum of minimum and maximum element
+//Given an array A of size N of integers. Your task is to find the sum of the minimum and maximum elements in the array.
+// similar question on leetcode :
+//2091. Removing Minimum and Maximum From Array
