@@ -27,6 +27,7 @@ todo: 14.Longest subarray with sum K (Positi…
 20.Next Permutation
 21. Leaders in array  ;
 22.Longest Successive Elements
+* merge sorted Array ;
 
 
 */
@@ -418,7 +419,7 @@ const maxConsecutiveOnes = (arr) => {
 };
 // console.log(maxConsecutiveOnes(consecutive));
 
-//!12. Find the number that appears once, and the other numbers twiceb
+//!12. Find the number that appears once, and the other numbers twice
 /* 
 brute force - double loop;
 better: hash array , hash map ; 
@@ -790,7 +791,7 @@ function majorityElemOptimal(nums) {
 * optimal - kadanes algorithm 
 */
 // const kadaneArr = [-2, -3, 4, -1, -2, 1, 5, -3]; // 7
-const kadaneArr = [-2, 1, -3, 4, -1, 2, 1, -5, 4]; // 6
+const kadaneArr = [-2, 1, -3, 4, -1, 2, 1, -5, 4]; // 6 :[4,-1,2,1,-5,4]
 
 const KadaneAlgo = (nums) => {
   let n = nums.length;
@@ -810,7 +811,7 @@ const KadaneAlgo = (nums) => {
   }
   return max;
 };
-// console.log(KadaneAlgo(kadaneArr));
+console.log(KadaneAlgo(kadaneArr));
 
 /*
 ! 19Q.  Best Time to Buy and Sell Stock -> interviewer will ask for space optimisation technique
@@ -942,7 +943,7 @@ tc=~O(n2) ,not exactly it will be near about ;sc=maxO(n2) min O(1): if no leader
 //assume all intergers of array are greater than -1 ;
 const lead = [10, 22, 12, 3, 0, 6];
 
-function leaderInArray(nums) {
+export default function leaderInArray(nums) {
   let n = nums.length;
   let max = Number.MIN_SAFE_INTEGER;
   let leaders = [nums[n - 1]];
@@ -1092,18 +1093,18 @@ const sample = [1, 2, 3, -3, 1, 1, 1, 4, 2, -3];
 function NumberOfSubArrayWithSumKOptimal(arr, k) {
   let count = 0;
   let sum = 0;
-  let preSumMap = new Map();
+  let preSumMap = new Map(); //(sum, count)
   let n = arr.length;
 
   preSumMap.set(0, 1); // watch the video you will understand ;
   // we are not using if(sum===k), just checking rem = sum-k ; sum =3 ; therefor sum-k =0;
   //so there exist a 0 with which we can compare , so that we are puting (0,1) in map ;
-  // also if we dont do it some cases were left ; watch the video of striver on youtube ; for proper explanation ;
+  // also if we dont do it some cases were left ; watch the video of striver on youtube(11:00) ; for proper explanation ;
 
   for (let i = 0; i < n; i++) {
     sum += arr[i];
-    let rem = sum - k;
 
+    let rem = sum - k;
     if (preSumMap.has(rem)) {
       count += preSumMap.get(rem);
     }
@@ -1114,4 +1115,8 @@ function NumberOfSubArrayWithSumKOptimal(arr, k) {
   return count;
 }
 
-console.log(NumberOfSubArrayWithSumKOptimal(sample, 3));
+// console.log(NumberOfSubArrayWithSumKOptimal(sample, 3)); // 8
+// console.log(NumberOfSubArrayWithSumKOptimal([-3, 3, 1, 1, 1], 3)); //3
+// do a dry run with [-3,3,1,1,1] you will understand the significance of seting (0,1) ;
+
+// ! Merge two sorted Array without using extra space ;
