@@ -5,15 +5,15 @@ todo:
 *- [ ] Find the factorial of the number 
 *- [ Y] Factorial Trailing Zeroes : how many zero in factorial ;
 * - [Y ] Find if the given number is palindrome
+*- [ ] Find if the given string is a palindrome
 !- [ ] Find number of primes in the given range 
 * - [ ] Find Gcd of two numbers 
 *- [ 26 ] Remove Duplicates From sorted Array 
 * - [ 88 ] Merge sorted Array 
 *  - [1572 ] Find diagonal Sum
 * - [ 189 ] Rotate the Array to the Right by k steps !important
-- [ ] find the sum of minimum and maximum element 
-- [ ] Write a function that reverse an array 
-- [ ] Find if the given string is a palindrome
+* - [ ] find the sum of minimum and maximum element 
+*- [ ] Write a function that reverse an array 
 - [ ] Find if the given two strings are a valid anagram 
 - [ ] Find if the given string is a valid parenthesis
 - [ ] write a fn to reverse a string
@@ -356,7 +356,7 @@ function diagonalSum(mat) {
   return ans;
 }
 
-console.log(diagonalSum(matrix));
+// console.log(diagonalSum(matrix));
 
 function diagonalSumOptimal(mat) {
   let n = mat.length; // take square matrix ;
@@ -410,9 +410,86 @@ function rotateArray(k, nums) {
   return nums;
 }
 
-console.log(rotateArray(2, [-1, -100, 3, 99]));
+// console.log(rotateArray(2, [-1, -100, 3, 99]));
 
-// - [ ] find the sum of minimum and maximum element
+//! - [ ] find the sum of minimum and maximum element
+
 //Given an array A of size N of integers. Your task is to find the sum of the minimum and maximum elements in the array.
 // similar question on leetcode :
 //2091. Removing Minimum and Maximum From Array
+
+let godxilla = [-2, 1, -4, 5, 3];
+
+function maxMin(arr) {
+  let n = arr.length;
+  let i = 1;
+  let max = arr[0];
+  let min = arr[0];
+  while (i < n) {
+    if (arr[i] > max) max = arr[i];
+    if (arr[i] < min) min = arr[i];
+    i++;
+  }
+  return max + min;
+}
+// console.log(maxMin(godxilla));
+
+var minimumDeletions = function (nums) {
+  if (nums.length == 1) return 1;
+  let n = nums.length;
+  let i = 1;
+  let max = nums[0];
+  let min = nums[0];
+  while (i < n) {
+    if (nums[i] > max) max = i;
+    if (nums[i] < min) min = i;
+    i++;
+  }
+  return { max, min };
+  let one = Math.min(max + 1, n - max);
+  let two = Math.min(min + 1, n - min);
+
+  return one + two;
+};
+// console.log(minimumDeletions(godxilla));
+
+//! - [ ] Write a function that reverse an array
+
+let revArr = [5, 12, 5, 1, 8];
+
+// tc : O(n/2) and sc : O(1) ;
+function reverseArray(n, arr) {
+  let i = 0;
+  let j = n - 1;
+  while (i <= j) {
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+    i++;
+    j--;
+  }
+  return arr;
+}
+
+// console.log(reverseArray(5, revArr));
+
+//!- [ ] Find if the given two strings are a valid anagram
+//Given two strings s and t, write a function to determine if t is an anagram of s.
+
+// Note: You may assume the string contains only lowercase alphabets.
+function validAnagram(s, t) {
+  if (s.length != t.length) {
+    return false;
+  }
+  s = s.toLowerCase();
+  t = t.toLowerCase();
+  let n = s.length;
+  let myMap = new Map();
+  for (let i = 0; i < n; i++) {
+    myMap.set(s[i], (myMap.get(s[i]) || 0) + 1);
+  }
+  for (let i = 0; i < n; i++) {
+    myMap.delete(t[i]);
+  }
+  return !myMap.size ? true : false;
+}
+
+// console.log(validAnagram("nuja", "anuj"));
