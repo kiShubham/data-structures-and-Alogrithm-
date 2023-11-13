@@ -14,8 +14,8 @@ todo:
 * - [ 189 ] Rotate the Array to the Right by k steps !important
 * - [ ] find the sum of minimum and maximum element 
 *- [ ] Write a function that reverse an array 
-- [ ] Find if the given two strings are a valid anagram 
-- [ ] Find if the given string is a valid parenthesis
+*- [ 242 ] Find if the given two strings are a valid anagram 
+- [ 20] Find if the given string is a valid parenthesis
 - [ ] write a fn to reverse a string
 - [ ] count frequency of characters
 - [ ] remove whitespaces from a string 
@@ -486,10 +486,41 @@ function validAnagram(s, t) {
   for (let i = 0; i < n; i++) {
     myMap.set(s[i], (myMap.get(s[i]) || 0) + 1);
   }
+  // return myMap;
   for (let i = 0; i < n; i++) {
-    myMap.delete(t[i]);
+    if (myMap.has(t[i])) {
+      myMap.set(t[i], myMap.get(t[i]) - 1);
+    }
+    if (myMap.has(t[i]) && myMap.get(t[i]) === 0) {
+      myMap.delete(t[i]);
+    }
   }
+
   return !myMap.size ? true : false;
 }
 
-// console.log(validAnagram("nuja", "anuj"));
+// console.log(validAnagram("aacc", "ccac"));
+
+// ! - [ ] Find if the given string is a valid parenthesis
+// Given a string S containing the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+
+var isValid = function (s) {
+  let arr = [];
+  let i = 0;
+
+  while (i < s.length) {
+    if (s[i] === "}" && arr[arr.length - 1] === "{") {
+      arr.pop();
+    } else if (s[i] === ")" && arr[arr.length - 1] === "(") {
+      arr.pop();
+    } else if (s[i] === "]" && arr[arr.length - 1] === "[") {
+      arr.pop();
+    } else arr.push(s[i]);
+    i++;
+  }
+  // return arr;
+  return arr.length ? false : true;
+};
+
+console.log(isValid("{[(}])"));
+console.log(isValid("([{}])"));
