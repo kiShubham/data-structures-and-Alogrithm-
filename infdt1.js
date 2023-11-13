@@ -15,11 +15,11 @@ todo:
 * - [ ] find the sum of minimum and maximum element 
 *- [ ] Write a function that reverse an array 
 *- [ 242 ] Find if the given two strings are a valid anagram 
-- [ 20] Find if the given string is a valid parenthesis
-- [ ] write a fn to reverse a string
-- [ ] count frequency of characters
-- [ ] remove whitespaces from a string 
-- [ ] capitalize the first letter of each word in a sentence
+* - [ 20] Find if the given string is a valid parenthesis
+* - [ ] write a fn to reverse a string
+*- [ ] count frequency of characters
+* - [ ] remove whitespaces from a string 
+* - [ 2129.] capitalize the first letter of each word in a sentence 
 - [ ] Frequency of words in a string 
 - [ ] Mock : Factorial Digit sum **
 - [ ] mock: two sum 
@@ -522,5 +522,180 @@ var isValid = function (s) {
   return arr.length ? false : true;
 };
 
-console.log(isValid("{[(}])"));
-console.log(isValid("([{}])"));
+// con/sole.log(isValid("{[(}])"));
+// console.log(isValid("([{}])"));
+
+//! - [ ] write a fn to reverse a string
+
+function reverseString(s) {
+  let ans = s.split(""); // extra stack space ;
+  let n = ans.length;
+  let i = 0;
+  let j = n - 1;
+  while (i <= j) {
+    [ans[i], ans[j]] = [ans[j], ans[i]];
+    i++;
+    j--;
+  }
+  s = ans.join("");
+  return s;
+}
+// console.log(reverseString("shubham"));
+
+//! [151.] Reverse Words in a String
+
+var reverseWords = function (s) {
+  let ans = [];
+  let n = s.length;
+  let str = "";
+  for (let i = 0; i < n; i++) {
+    let temp = s[i];
+    str += s[i];
+
+    if (temp !== " " && (s[i + 1] === " " || i + 1 === n)) {
+      console.log(str);
+      ans.push(str);
+    } else if (temp === " ") {
+      str = "";
+    }
+  }
+  return ans.reverse().join(" ");
+};
+// console.log(reverseWords("shubham  singh reverese program"));
+// console.log(reverseWords("the sky is blue"));
+
+// ! [541.] Reverse String II
+//Given a string s and an integer k, reverse the first k characters for every 2k characters counting from the start of the string.
+
+function swap(arr, start, end) {
+  while (start <= end) {
+    [arr[start], arr[end]] = [arr[end], arr[start]];
+    start++;
+    end--;
+  }
+  return arr;
+}
+
+var reverseStr = function (s, k) {
+  let ans = s.split("");
+  let n = ans.length;
+  for (let i = 0; i < n; i += 2 * k) {
+    ans = swap(ans, i, i + k - 1);
+  }
+  return ans.join("");
+};
+// console.log(reverseStr("abcdefghijkl", 2)); // bacdfeghjikl;
+
+//! - [ ] count frequency of characters
+function mostFrequent(text) {
+  let myMap = new Map();
+  let max = 0;
+  let alpha = [];
+  let ans = [];
+  let asciiValue = Number.MAX_SAFE_INTEGER;
+
+  for (let i = 0; i < text.length; i++) {
+    myMap.set(text[i], (myMap.get(text[i]) || 0) + 1);
+  }
+
+  for (const iterator of myMap) {
+    if (iterator[1] > max) {
+      alpha = [];
+      max = iterator[1];
+      alpha.push(iterator[0]);
+    } else if (iterator[1] === max) {
+      alpha.push(iterator[0]);
+    }
+  }
+  ans = ["", max];
+  for (let i = 0; i < alpha.length; i++) {
+    if (alpha[i].charCodeAt(0) < asciiValue) {
+      ans[0] = alpha[i];
+      asciiValue = alpha[i].charCodeAt(0);
+    }
+  }
+
+  return ans;
+}
+
+// console.log(mostFrequent("Statements are unique."));
+
+// ! - [ ] remove whitespaces from a string
+
+// Given a String with white spaces, the task is to remove all white spaces from a string
+// learn by doing  // learnbydoing
+function removeWhiteSpace(s) {
+  let i = 0;
+  let n = s.length;
+  let ans = s.split(" ");
+  s = "";
+  while (i < n) {
+    if (ans[i] !== " " && ans[i]) {
+      s += ans[i];
+    }
+    i++;
+  }
+  return s;
+}
+// console.log(removeWhiteSpace("learn by doing"));
+
+// ! - [ 2129 ] capitalize the first letter of each word in a sentence
+/* 
+You are given a string title consisting of one or more words separated by a single space, where each word consists of English letters. Capitalize the string by changing the capitalization of each word such that:
+
+If the length of the word is 1 or 2 letters, change all letters to lowercase.
+Otherwise, change the first letter to uppercase and the remaining letters to lowercase.
+Return the capitalized title.
+*/
+
+function capitaliseBasic(paragraph) {
+  let n = paragraph.length;
+  let i = 0;
+  let ans = "";
+  while (i < n) {
+    if (
+      (paragraph.charAt(i - 1) === " " || i === 0) &&
+      !(
+        paragraph.charAt(i + 1) === " " ||
+        paragraph.charAt(i + 2) === " " ||
+        !paragraph.charAt(i + 1) ||
+        !paragraph.charAt(i + 2)
+      )
+    ) {
+      ans += paragraph.charAt(i).toUpperCase();
+    } else {
+      ans += paragraph.charAt(i).toLowerCase();
+    }
+    i++;
+  }
+  return ans;
+}
+
+// console.log(capitaliseBasic("I capital this sentence first letters of a only")); // i Capital This Sentence First Letters of a Only
+// console.log(capitaliseBasic("capiTalIze tHe titLe")); // Capitalize The Title
+// console.log(capitaliseBasic("L Hv")); // l hv
+
+// ! - [ ] Frequency of words in a string
+
+//words = [car,bus,car] ;
+function frequentWords(words, k) {
+  let n = words.length;
+  let myMap = new Map();
+  let arr = new Array(myMap.size);
+  let ans = null;
+
+  for (let i = 0; i < n; i++) {
+    myMap.set(words[i], (myMap.get(words[i]) || 0) + 1);
+    arr.push([]);
+  }
+
+  for (const iterator of myMap) {
+    arr[iterator[1]].push(iterator[0]);
+  }
+
+  ans = arr[k];
+
+  // for (let i = 0; i < ans.length; i++) {}
+  return ans;
+}
+console.log(frequentWords(["car", "bus", "car", "bus"], 2));
