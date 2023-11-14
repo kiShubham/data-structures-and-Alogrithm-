@@ -17,14 +17,16 @@ todo:
 *- [ 242 ] Find if the given two strings are a valid anagram 
 * - [ 20] Find if the given string is a valid parenthesis
 * - [ ] write a fn to reverse a string
+* [151.] Reverse Words in a String
+* [541.] Reverse String II
 *- [ ] count frequency of characters
 * - [ ] remove whitespaces from a string 
 * - [ 2129.] capitalize the first letter of each word in a sentence 
-- [ ] Frequency of words in a string 
-- [ ] Mock : Factorial Digit sum **
+! - [ ] Frequency of words in a string .not completed
+* - [ ] Mock : Factorial Digit sum **
 - [ ] mock: two sum 
-- [ ] Reverse word in a string
-- [ ] Longest common prefix ;
+*- [ 151] Reverse word in a string; above done
+* - [ 14 ] Longest common prefix ;
 */
 
 // * - [ ] Find the reverse of the number  // ans = ans * 10 + (x % 10);
@@ -698,4 +700,171 @@ function frequentWords(words, k) {
   // for (let i = 0; i < ans.length; i++) {}
   return ans;
 }
-console.log(frequentWords(["car", "bus", "car", "bus"], 2));
+// console.log(frequentWords(["car", "bus", "car", "bus"], 2));
+
+//!- [ ] Mock : Factorial Digit sum **
+// Given a number n, write code to find the sum of digits in the factorial of the number.
+
+// this is not passing test cases .this will only work for 0 to 170 ;
+// if n exceed 170 it will give us factorial = infinity ; thus we cant calculate sum of numbers ;
+// 1 <= n <= 50000, n range is so high that factorial variable could not hold it ;
+
+function factorialDigitSum(n) {
+  if (n == 0 || n == 1) return 1;
+  let factorial = 1;
+  let ans = 0;
+
+  for (let i = 1; i <= n; i++) {
+    factorial = factorial * i;
+  }
+  console.log(factorial);
+
+  while (factorial >= 1) {
+    ans += factorial % 10;
+    factorial = Math.floor(factorial / 10);
+  }
+  return ans;
+}
+// console.log(factorialDigitSum(170)); // 1129 ;
+// console.log(factorialDigitSum(171)); // infinity ;
+
+function multiply(x, arr) {
+  let carry = 0;
+  let n = arr.length;
+  for (let i = 0; i < n; i++) {
+    let res = carry + arr[i] * x;
+    arr[i] = res % 10;
+    carry = Math.floor(res / 10);
+  }
+  while (carry != 0) {
+    arr.push(carry % 10);
+    carry = Math.floor(carry / 10);
+  }
+  return arr;
+}
+
+function factorialDigitSumOptimal(n) {
+  let arr = [];
+  arr.push(1);
+
+  for (let i = 1; i <= n; i++) {
+    arr = multiply(i, arr);
+  }
+
+  let sum = 0;
+  let size = arr.length;
+  for (let i = 0; i < size; i++) {
+    sum += arr[i];
+  }
+  return sum;
+}
+
+// console.log(factorialDigitSumOptimal(10));
+
+function trailingZeroesOtherWay(n) {
+  let arr = [1];
+  let ans = 0;
+  for (let i = 1; i <= n; i++) {
+    arr = multiply(i, arr);
+  }
+
+  for (let i = 0; i <= arr.length; i++) {
+    if (arr[i]) break;
+    else ans++;
+  }
+
+  return ans;
+}
+// console.log(trailingZeroesOtherWay(10));
+
+//!- [ ] mock: two sum
+//Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+/*
+Input: nums = [2,7,11,15], target = 9
+Output: [0,1]
+Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
+ */
+var twoSum = function (nums, target) {};
+
+//!- [ ] Reverse word in a string
+//* done above
+//!- [ ] Longest common prefix ;
+// brute force
+
+function longestCommonPrefix(arr) {
+  let n = arr.length;
+
+  if (n == 1) return arr[0];
+  else if (n == 0) return "";
+
+  let prefix = "";
+  let flag = true;
+  let first = arr[0];
+  for (let i = 0; i < first.length; i++) {
+    for (let j = 1; j < arr.length; j++) {
+      if (arr[j].charAt(i) !== first.charAt(i) || !arr[j].charAt(i))
+        flag = false;
+    }
+    if (flag) prefix += first.charAt(i);
+    else break;
+  }
+
+  return prefix;
+}
+
+// console.log(longestCommonPrefix(["flower", "flow", "flu"]));
+// console.log(longestCommonPrefix(["car", "cir"]));
+
+//* intitution: in first loop , pick the array element string which has least length ;so the outerloop can be reduced
+// but the inner loop is fixed to perform for the full array ;
+function longestCommonPrefixOptimal(arr) {
+  if (!arr.length) return "";
+
+  let n = arr.length;
+  let flag = true;
+  let first = arr[0];
+  let min = arr[0].length;
+  let prefix = "";
+
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].length < min) {
+      min = arr[i].length;
+      first = arr[i];
+    }
+  }
+
+  for (let i = 0; i < first.length; i++) {
+    for (let j = 0; j < n; j++) {
+      if (arr[j].charAt(i) !== first.charAt(i) || !arr[j].charAt(i)) {
+        flag = false;
+      }
+    }
+    if (flag) prefix += first.charAt(i);
+    else break;
+  }
+  return prefix;
+}
+// console.log(longestCommonPrefixOptimal(["flower", "flow", "flight", "fl"]));
+// console.log(longestCommonPrefixOptimal(["cir", "car"]));
+
+function longestCommonPrefixOptimalSort(strs) {
+  let n = strs.length;
+
+  if (!n) return "";
+  else if (n === 1) return strs[0];
+  strs = strs.sort();
+
+  let prefix = "";
+  let first = strs[0];
+  let last = strs[n - 1];
+
+  let length = Math.min(first.length, last.length);
+  for (let i = 0; i < length; i++) {
+    if (first[i] !== last[i]) {
+      break;
+    } else prefix += first[i];
+  }
+  return prefix;
+}
+// console.log(longestCommonPrefixOptimalSort(["flower", "flight", "flow", "fl"]));
+// console.log(longestCommonPrefixOptimalSort(["dog", "racecar", "car"]));
