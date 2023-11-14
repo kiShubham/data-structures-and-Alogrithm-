@@ -783,8 +783,71 @@ function trailingZeroesOtherWay(n) {
 Input: nums = [2,7,11,15], target = 9
 Output: [0,1]
 Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
- */
-var twoSum = function (nums, target) {};
+* brute : O(n2);
+* better : hashing ;O(n)
+* optimal : O(n) + O(nlogn)
+
+*/
+
+//
+var twoSumMaps = function (nums, target) {
+  let n = nums.length;
+  let myMap = new Map();
+  let ans = [];
+
+  for (let i = 0; i < n; i++) {
+    let temp = target - nums[i];
+    myMap.set(temp, i);
+  }
+
+  for (let i = 0; i < n; i++) {
+    let temp = myMap.get(nums[i]);
+    if (myMap.has(nums[i]) && temp !== i) {
+      ans = [i, temp];
+      return ans;
+    }
+  }
+};
+
+// console.log(twoSumMaps([0, 1, 2, 3, 6, 4], 9));
+// console.log(twoSumMaps([3, 2, 4], 6));
+
+function twoSumOptimal(nums, target) {
+  let n = nums.length;
+  let arr = [];
+
+  nums.forEach((element) => {
+    arr.push(element);
+  });
+
+  arr.sort((a, b) => a - b); // * main point
+
+  let left = 0;
+  let right = n - 1;
+
+  while (left < right) {
+    let sum = arr[left] + arr[right];
+
+    if (target === sum) {
+      break;
+    } else if (target > sum) left++;
+    else if (target < sum) right--;
+  }
+
+  let x = 0,
+    y = 0;
+
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] === arr[left]) x = i;
+  }
+
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] === arr[right] && i !== x) y = i;
+  }
+
+  return [Math.min(x, y), Math.max(x, y)];
+}
+console.log(twoSumOptimal([1, 3, -2, 33, 2], 5));
 
 //!- [ ] Reverse word in a string
 //* done above
@@ -852,7 +915,8 @@ function longestCommonPrefixOptimalSort(strs) {
 
   if (!n) return "";
   else if (n === 1) return strs[0];
-  strs = strs.sort();
+
+  strs = strs.sort(); // * Mian point : sorting lexiographically ;
 
   let prefix = "";
   let first = strs[0];
@@ -864,6 +928,7 @@ function longestCommonPrefixOptimalSort(strs) {
       break;
     } else prefix += first[i];
   }
+
   return prefix;
 }
 // console.log(longestCommonPrefixOptimalSort(["flower", "flight", "flow", "fl"]));
