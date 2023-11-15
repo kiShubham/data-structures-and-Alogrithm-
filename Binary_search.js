@@ -1,5 +1,28 @@
 // 19Q . total ;
 
+/* 
+* 1Q. Ascending sorted array ❔
+* 2Q. Decending sorted Array || Reverse sorted array ❔
+* 3Q. Order Agnostic search  ❔
+* 4Q. 1st and Last Occurence of an Element ❔ 
+* 5Q. Count of element in a sorted Array
+* 6Q. Number of times sorted Array is rotated ; or index of minimum number in sorted rotated array ;
+* 7Q. Search in Rotated Sorted Array
+* 8Q. Searching in nearly sorted array ;
+* 9Q. Find floor of an Element in a sorted Array; 
+* 10 Q. Find ceil of an Element in a sorted Array;
+* 11Q.Find the position of an element in an infinite sorted Array ; ***
+* 12 Q . Find the index of first occurrence of  "1" in Binary sorted Array ;
+* 13 Q . Find the index of first occurrence of  "1" in INFINTE Binary sorted Array ;
+* 14Q. Minimum Absoulute difference element in the sorted Array for a given key ;
+* 15 Q. Find peak element  
+* 16Q. Bitonic Array ,find max element ;
+* 17Q. Search in Bitonic Array ;
+* 18Q . Search in 2d array with sorted rowwise and columwise 
+* 19Q. Allocate Minimum Number of Pages from N books to M students .
+
+*/
+
 // use better comments extension for ease to read ;
 
 // question m agar "sorted" word ka use kiya gya h ,tou chances are binary search applicable;
@@ -14,7 +37,7 @@
 ! 1Q. Ascending sorted array ❔
 */
 
-// const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 let nums = [-1, 0, 3, 5, 9, 12];
 let search1 = (arr, x) => {
   let l = 0;
@@ -35,7 +58,7 @@ let search1 = (arr, x) => {
   // if the elemnt is not founded in the array hence
   return -1;
 };
-// console.log(search1(arr, 12));
+console.log(search1(arr, 12));
 
 /*
    ! 2Q. Decending sorted Array || Reverse sorted array ❔
