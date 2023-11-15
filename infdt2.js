@@ -11,7 +11,7 @@
 * - [ 121. ,122 . ] Best time to buy and sell stocks 
 - [ ] power of two 
 *- [ 54 ] spiral matrix
-- [ ] move Zeros to Right
+- [ 283 ] move Zeros to Right
 
 */
 
@@ -219,3 +219,4 @@ console.log(
 
 //! - [ ] move Zeros to Right
 // Given an array A, write a function to move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+// Input: nums = [0,1,0,3,12] Output: [1,3,12,0,0] ;
