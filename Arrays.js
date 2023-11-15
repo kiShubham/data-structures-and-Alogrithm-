@@ -813,7 +813,7 @@ const KadaneAlgo = (nums) => {
   }
   return max;
 };
-console.log(KadaneAlgo(kadaneArr));
+// console.log(KadaneAlgo(kadaneArr));
 
 /*
 ! 19Q.  Best Time to Buy and Sell Stock -> interviewer will ask for space optimisation technique
@@ -843,7 +843,7 @@ const buyStocks = (nums) => {
   }
   return maxProfit;
 };
-// console.log(buyStocks(stock));
+// console.log(buyStocks(stock)); // 5
 
 /* 
 ! 20Q.Rearrange Array Elements by Sign 
@@ -945,7 +945,7 @@ tc=~O(n2) ,not exactly it will be near about ;sc=maxO(n2) min O(1): if no leader
 //assume all intergers of array are greater than -1 ;
 const lead = [10, 22, 12, 3, 0, 6];
 
-export default function leaderInArray(nums) {
+function leaderInArray(nums) {
   let n = nums.length;
   let max = Number.MIN_SAFE_INTEGER;
   let leaders = [nums[n - 1]];
