@@ -1,12 +1,12 @@
 /*  
 todo:
 *- [ 7 ] Find the reverse of the number 
-!- [ ] Count the number of prime less than N
+!- [ ] Count the number of prime less than N (basic problem of crio file )
 *- [ ] Find the factorial of the number 
 *- [ Y] Factorial Trailing Zeroes : how many zero in factorial ;
 * - [Y ] Find if the given number is palindrome
 *- [ ] Find if the given string is a palindrome
-!- [ ] Find number of primes in the given range 
+!- [ ] Find number of primes in the given range {{done}}
 * - [ ] Find Gcd of two numbers 
 *- [ 26 ] Remove Duplicates From sorted Array 
 * - [ 88 ] Merge sorted Array 
@@ -24,7 +24,7 @@ todo:
 * - [ 2129.] capitalize the first letter of each word in a sentence 
 ! - [ ] Frequency of words in a string .not completed
 * - [ ] Mock : Factorial Digit sum **
-- [ ] mock: two sum 
+* - [ ] mock: two sum 
 *- [ 151] Reverse word in a string; above done
 * - [ 14 ] Longest common prefix ;
 */
@@ -50,6 +50,49 @@ var reverse = function (x) {
 };
 // console.log(reverse(120002));
 // console.log(reverse(-120002));
+
+// *- [ ] print all the prime less than N (basic problem of crio file )
+
+function primeNum(n) {
+  let count = [];
+  if (n < 2) return 0;
+
+  for (let i = 2; i < n; i++) {
+    let bool = true;
+    if (i === 2) bool = true;
+    else {
+      for (let j = 2; j < i; j++) {
+        if (i % j === 0) {
+          bool = false;
+          break;
+        }
+      }
+    }
+    if (bool === true) {
+      count.push(i);
+    }
+  }
+  return count;
+}
+// console.log(primeNum(11));
+function primeNumOpti(n) {
+  let count = [];
+  if (n < 2) return 0;
+
+  for (let i = 2; i < n; i++) {
+    let bool = true;
+    if (n !== 2) {
+      for (let j = 2; j <= Math.sqrt(i); j++) {
+        if (i % j == 0) bool = false;
+      }
+    }
+    if (bool == true) count.push(i);
+  }
+  return count;
+}
+
+// console.log(primeNumOpti(11));
+function primeNumSeiveTube(n) {}
 
 //* - [ ] Find the factorial of the number
 
@@ -847,7 +890,7 @@ function twoSumOptimal(nums, target) {
 
   return [Math.min(x, y), Math.max(x, y)];
 }
-console.log(twoSumOptimal([1, 3, -2, 33, 2], 5));
+// console.log(twoSumOptimal([1, 3, -2, 33, 2], 5));
 
 //!- [ ] Reverse word in a string
 //* done above

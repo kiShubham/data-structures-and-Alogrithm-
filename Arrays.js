@@ -20,9 +20,9 @@ todo: 13.Longest subarray with given sum K(p…
 todo: 14.Longest subarray with sum K (Positi…
 
   15.2Sum Problem
-* 16.Sort an array of 0's 1's and 2's, dutch national flag algorithm ; 
+! 16.Sort an array of 0's 1's and 2's, dutch national flag algorithm ; 
 * 17.Majority Element (>n/2 times) , moores algorithm  ;
-* 18 .Kadane’s Algorithm : Maximum Subarray Sum in an Array
+! 18 .Kadane’s Algorithm : Maximum Subarray Sum in an Array
   19. Best Time to Buy and Sell Stock
 20.Next Permutation
 21. Leaders in array  ;
