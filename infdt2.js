@@ -11,8 +11,9 @@
 * - [ 121. ,122 . ] Best time to buy and sell stocks 
 - [ ] power of two 
 *- [ 54 ] spiral matrix
-- [ 283 ] move Zeros to Right
-
+*- [ 283 ] move Zeros to Right
+!Find Triplet with maximum sum in unsorted Array 
+!merge sort
 */
 
 // !- [ ] Search Target
@@ -133,7 +134,7 @@ var maxProfit = function (prices) {
   return maxProfit;
 };
 
-console.log(maxProfit(stocks)); // 5 /one time buy and one time sell ;
+// console.log(maxProfit(stocks)); // 5 /one time buy and one time sell ;
 
 //! - [ 122] Best time to buy and sell stocks II, buy multiple times
 //On each day, you may decide to buy and/or sell the stock.
@@ -168,7 +169,36 @@ function bestTimeToBuyAndSellStocks2ndWay(prices) {
   return profit;
 }
 
-// - [ ] power of two
+//! - [ ] power of two
+//Given an integer n, return true if it is a power of two. Otherwise, return false.
+// An integer n is a power of two, if there exists an integer x such that n == 2x.
+function powerOfTwo(n) {
+  if (n == 1) return true;
+  else if (n == 0) return false;
+
+  let flag = true;
+
+  while (n) {
+    if (n == 2) return true; //or return flag
+
+    let temp = n / 2;
+    if (temp % 2 != 0) {
+      flag = false;
+      return false;
+    }
+    n = n / 2;
+  }
+}
+// console.log(powerOfTwo(10));
+function powerOfTwo2nd(n) {
+  if (n <= 0) return false;
+  while (n % 2 == 0) {
+    n = n / 2;
+  }
+  return n == 1;
+}
+// console.log(powerOfTwo2nd(8192));
+
 //! - [ ] spiral matrix
 let mat = [
   [1, 2, 3],
@@ -207,7 +237,7 @@ function spiralMatrix(arr) {
   }
   return ans;
 }
-console.log(spiralMatrix(mat));
+/* console.log(spiralMatrix(mat));
 console.log(
   spiralMatrix([
     [1, 2, 3, 4],
@@ -215,8 +245,95 @@ console.log(
     [11, 16, 15, 6],
     [10, 9, 8, 7],
   ])
-);
+); */
 
 //! - [ ] move Zeros to Right
 // Given an array A, write a function to move all 0's to the end of it while maintaining the relative order of the non-zero elements.
 // Input: nums = [0,1,0,3,12] Output: [1,3,12,0,0] ;
+function moveZeros(arr) {
+  const n = arr.length;
+  let i = 0,
+    j = 1;
+  while (j < n && i <= j) {
+    if (arr[i] == 0 && arr[j] != 0) {
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+      i++;
+      j++;
+    } else if (arr[i] != 0 && arr[j] != 0 && i == j) {
+      i++;
+      j++;
+    } else if (arr[j] == 0) {
+      j++;
+    } else if (arr[i] != 0) {
+      i++;
+    }
+    console.log(i, j);
+  }
+  return arr;
+}
+var moveZeroes2nd = function (nums) {
+  let n = nums.length;
+  let i = 0;
+  let j = 1;
+  while (j < n) {
+    if (nums[j] !== 0 && nums[i] === 0) {
+      nums[i] = nums[j];
+      nums[j] = 0;
+      i++;
+    }
+    if (nums[i] !== 0) i++;
+    j++;
+  }
+  return nums;
+};
+
+/* console.log(moveZeros([1, 2, 3, 0, 0, 4]));
+console.log(moveZeros([0, 1, 0, 3, 12, 0]));
+console.log(moveZeros([0]));
+ */
+
+var search = function (nums) {
+  let l = 0;
+  let r = nums.length - 1;
+  let pivot, mid;
+  while (l <= r) {
+    mid = l + Math.floor((r - l) / 2);
+    //[ 1, 3, 5 ]
+    if (arr[mid] < arr[mid - 1] && arr[mid] < arr[mid + 1]) {
+      pivot = mid;
+      break;
+    } else if (arr[mid] < arr[r]) {
+      pivot = mid;
+      r = mid - 1;
+    } else if (arr[mid] > arr[r]) {
+      l = mid + 1;
+    } else if (l === r) {
+      if (arr[mid] < arr[mid + 1]) pivot = mid; //left most
+      else if (arr[mid] < arr[mid - 1]) pivot = mid; // right most;
+      break;
+    }
+  }
+  /* while (l <= r) {
+    mid = l + Math.floor((r - l) / 2);
+
+    if (arr[mid] < arr[mid - 1] && arr[mid] < arr[mid + 1]) {
+      pivot = mid;
+      break;
+    } else if (arr[mid] < arr[r]) {
+      // save mid && search left of mid
+      pivot = mid;
+      r = mid - 1;
+    } else if (arr[mid] > arr[r]) {
+      //search right of mid
+      l = mid + 1;
+    } else if (l === r) {
+      if (arr[mid] < arr[mid + 1]) pivot = mid; //left most
+      else if (arr[mid] < arr[mid - 1]) pivot = mid; // right most;
+      break;
+    }
+  } */
+  return pivot;
+};
+let rr = [6, 7, 0, 1, 2, 4, 5];
+// console.log(search([4, 5, 6, 7, 0, 1, 2]));
+console.log(search(rr));

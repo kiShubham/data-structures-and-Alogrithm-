@@ -4,21 +4,21 @@
 * 1Q. Ascending sorted array ❔
 * 2Q. Decending sorted Array || Reverse sorted array ❔
 * 3Q. Order Agnostic search  ❔
-* 4Q. 1st and Last Occurence of an Element ❔ 
+! 4Q. 1st and Last Occurence of an Element ❔🔼 
 * 5Q. Count of element in a sorted Array
 * 6Q. Number of times sorted Array is rotated ; or index of minimum number in sorted rotated array ;
-* 7Q. Search in Rotated Sorted Array
-* 8Q. Searching in nearly sorted array ;
+! 7Q. Search in Rotated Sorted Array 🔼
+! 8Q. Searching in nearly sorted array ;
 * 9Q. Find floor of an Element in a sorted Array; 
 * 10 Q. Find ceil of an Element in a sorted Array;
 * 11Q.Find the position of an element in an infinite sorted Array ; ***
 * 12 Q . Find the index of first occurrence of  "1" in Binary sorted Array ;
 * 13 Q . Find the index of first occurrence of  "1" in INFINTE Binary sorted Array ;
 * 14Q. Minimum Absoulute difference element in the sorted Array for a given key ;
-* 15 Q. Find peak element  
+! 15 Q. Find peak element  
 * 16Q. Bitonic Array ,find max element ;
 * 17Q. Search in Bitonic Array ;
-* 18Q . Search in 2d array with sorted rowwise and columwise 
+! 18Q . Search in 2d array with sorted rowwise and columwise 
 * 19Q. Allocate Minimum Number of Pages from N books to M students .
 
 */
@@ -133,7 +133,7 @@ const searchFirstOccurence = (arr, x) => {
     mid = l + Math.floor((r - l) / 2);
     if (arr[mid] === x) {
       res = mid;
-      r = mid - 1; // search left side of the current mid position to find first occurence;
+      r = mid - 1; // !search left side of the current mid position to find first occurence;
     } else if (arr[mid] > x) r = mid - 1;
     else if (arr[mid] < x) l = mid + 1;
   }
@@ -141,7 +141,6 @@ const searchFirstOccurence = (arr, x) => {
   return -1;
 };
 /* 
-// shift+alt+a 
 console.log(searchFirstOccurence(arr4, 10)); // 2
 console.log(searchFirstOccurence(arr4, 20)); // 6
 console.log(searchFirstOccurence(arr4, 100)); // -1
@@ -155,7 +154,7 @@ const searchLastOccurence = (arr, x) => {
     mid = l + Math.floor((r - l) / 2);
     if (arr[mid] === x) {
       res = mid;
-      l = mid + 1;
+      l = mid + 1; // !search right side of the current mid position to find first occurence;
     } else if (arr[mid] > x) r = mid - 1;
     else if (arr[mid] < x) l = mid + 1;
   }
@@ -172,6 +171,7 @@ console.log(searchLastOccurence(arr4, 20)); // 7
  ! 5Q. Count of element in a sorted Array
 */
 arr4 = [2, 4, 10, 10, 10, 18, 20, 20];
+// find the indexes and then judge it ;
 
 const countElement = (arr, x) => {
   let first = searchFirstOccurence(arr, x);
@@ -191,7 +191,7 @@ console.log(countElement(arr4, 30)); // -1
  ? array = [2,5,6,8,10,11,12,15,18] *non repeating
  ? after '4'times rotation ,input arr= [10,11,12,15,18,2,5,6,8] 15>8 ;so search right of 15;
                                      ? [15,18,2,5,6,8,10,11,12] 6<12 ;so save 6 and search left;
-                                     ? [2,5,6,8,10,11,12,15,18] no rotation since arr[mid] > arr[len-1];
+                                     ? [2,5,6,8,10,11,12,15,18] no rotation since arr[0] < arr[len-1];
  ! if(arr[0] > arr[ar.len -1]){ // rotation happens} // search right;and find index of smallest no.
   arr[mid] < arr[0] ;then possibility is arr[mid] is smallest or smallest lie in left of arr[mid]
   !if(arr[0] < arr[ar.len -1]){ // rotation not happens} //output is 0;
@@ -354,16 +354,15 @@ const numsArray1 = [7, 1, 2, 3, 4, 5, 6]; //error running ;
 const numsArray2 = [6, 7, 0, 1, 2, 4, 5]; //working
 const numsArray3 = [4, 5, 6, 7, 0, 1, 2]; // not working  ? -1
 
-/* console.log("first");
-console.log(searchInRotatedSortedArray(numsArray, 10)); // target didnt exist
-console.log(searchInRotatedSortedArray(numsArray1, 6)); //6
-console.log(searchInRotatedSortedArray(numsArray2, 2)); // 4
-console.log(searchInRotatedSortedArray(numsArray2, 0)); // 2
-console.log(searchInRotatedSortedArray(numsArray3, 0)); //4
-console.log(searchInRotatedSortedArray([1, 3], 3)); //1
-console.log(searchInRotatedSortedArray([1, 3, 5], 5)); //2
-console.log(searchInRotatedSortedArray([1, 3, 5], 0)); // target didnt exist
- */
+// console.log("first");
+// console.log(searchInRotatedSortedArray(numsArray, 10)); // target didnt exist
+// console.log(searchInRotatedSortedArray(numsArray1, 6)); //6
+// console.log(searchInRotatedSortedArray(numsArray2, 2)); // 4
+// console.log(searchInRotatedSortedArray(numsArray2, 0)); // 2
+// console.log(searchInRotatedSortedArray(numsArray3, 0)); //4
+// console.log(searchInRotatedSortedArray([1, 3], 3)); //1
+// console.log(searchInRotatedSortedArray([1, 3, 5], 5)); //2
+// console.log(searchInRotatedSortedArray([1, 3, 5], 0)); // target didnt exist
 
 /*
 
