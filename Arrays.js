@@ -130,9 +130,9 @@ function removeDuplicates(arr) {
     }
     j++;
   }
-  return arr;
+  return i + 1; // length of the new Array;
 }
-// console.log(removeDuplicates(dupArr));
+console.log(removeDuplicates(dupArr));
 
 //! 5.Left Rotate an array by one place;
 let rotArr = [1, 2, 3, 4, 5]; //o/p -> [2,3,4,5,1];
@@ -236,7 +236,7 @@ function rotateArrayByD(arr, D) {
 const zr = [0, 0, 1, 2, 5, 0, 8, 2, 0, 7, 2, 0, 8, 0];
 //Brute force ;
 function moveZerosBrt(arr) {
-  let temp = [];
+  let temp = []; //extra space
   for (let i = 0; i < arr.length; i++) {
     if (arr[i]) temp.push(arr[i]);
   }
@@ -309,7 +309,7 @@ function unionSorted(arr1, arr2) {
 
 // console.log(unionSorted(sarr1, sarr2)); // [ 1, 2, 3, 4, 5, 6 ]
 
-//!intersection of two sorted array ;
+//!intersection of two "sorted array" ;
 let a = [1, 2, 2, 3, 3, 4, 5, 6, 7];
 let b = [2, 3, 3, 5, 5, 6];
 /* 
