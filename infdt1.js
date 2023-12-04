@@ -23,7 +23,7 @@ todo:
 * - [ ] remove whitespaces from a string 
 * - [ 2129.] capitalize the first letter of each word in a sentence 
 ! - [ ] Frequency of words in a string .not completed
-* - [ ] Mock : Factorial Digit sum **
+! - [ ] Mock : Factorial Digit sum **
 * - [ ] mock: two sum 
 *- [ 151] Reverse word in a string; above done
 * - [ 14 ] Longest common prefix ;
