@@ -23,7 +23,7 @@ todo:
 * - [ ] remove whitespaces from a string 
 * - [ 2129.] capitalize the first letter of each word in a sentence 
 ! - [ ] Frequency of words in a string .not completed
-* - [ ] Mock : Factorial Digit sum **
+! - [ ] Mock : Factorial Digit sum **
 * - [ ] mock: two sum 
 *- [ 151] Reverse word in a string; above done
 * - [ 14 ] Longest common prefix ;
@@ -142,9 +142,9 @@ function isNumberPalindromeReverse(n) {
     reverse = reverse * 10 + (temp % 10);
     temp = Math.floor(temp / 10);
   }
-  return reverse;
+  return reverse === n;
 }
-// console.log(isNumberPalindromeReverse(161416));
+// console.log(isNumberPalindromeReverse(1614161));
 
 // * - [ ] Find if the given string is a palindrome
 
@@ -396,7 +396,7 @@ function diagonalSum(mat) {
   }
   let index = Math.floor(mat.length / 2);
   if (mat.length % 2 !== 0) {
-    ans = ans - mat[index][index];
+    ans = ans - mat[index][index]; // center element ;
   }
   return ans;
 }
@@ -598,7 +598,7 @@ var reverseWords = function (s) {
     str += s[i];
 
     if (temp !== " " && (s[i + 1] === " " || i + 1 === n)) {
-      console.log(str);
+      // console.log(str);
       ans.push(str);
     } else if (temp === " ") {
       str = "";

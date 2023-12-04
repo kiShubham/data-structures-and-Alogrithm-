@@ -5,7 +5,7 @@
 *- [ done in infdt1  14.] longest common prefix
 - [ ] search in a rotated sorted array 
 - [ ] find intersection of two arrays
-- [ ] find first position in sorted array 
+- [ ] find first position in sorted array; save karo aur left move karo  
 *- [ ] Nth Fibonacci number 
 *- [ 48 ] rotate image / matrix
 * - [ 121. ,122 . ] Best time to buy and sell stocks 
@@ -173,7 +173,7 @@ function bestTimeToBuyAndSellStocks2ndWay(prices) {
 //Given an integer n, return true if it is a power of two. Otherwise, return false.
 // An integer n is a power of two, if there exists an integer x such that n == 2x.
 function powerOfTwo(n) {
-  if (n == 1) return true;
+  if (n == 1) return true; // 2^0 = 1
   else if (n == 0) return false;
 
   let flag = true;
